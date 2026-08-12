@@ -1,0 +1,8 @@
+{
+  "name": "vim-visa-immigration",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node -e \"const fs=require('fs'); const html=fs.readFileSync('index.html','utf8'); if (!html.startsWith('<!doctype html>') || !html.includes('</html>')) process.exit(1); console.log('Static HTML build check passed.');\""
+  }
+}
