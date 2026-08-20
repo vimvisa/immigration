@@ -178,9 +178,8 @@
   .card-country { font-size: 0.8rem; color: var(--gold-400); font-weight: 600; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
   .card-flag { font-size: 1.1rem; line-height: 1; }
   .card-title { font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.4; }
-  .card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; gap: 0.75rem; }
-  .card-summary { font-size: 0.875rem; color: var(--slate-600); margin-bottom: 0.5rem; flex: 1; }
-  .card-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+  .card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .card-summary { font-size: 0.875rem; color: var(--slate-600); margin-bottom: 1.25rem; flex: 1; }
   .card-btn {
     width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: none;
     background: linear-gradient(135deg, var(--navy-800), var(--navy-700)); color: var(--white);
@@ -188,13 +187,6 @@
     transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   }
   .card-btn:hover { background: linear-gradient(135deg, var(--navy-700), var(--gold-500)); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,22,40,0.2); }
-  .card-btn-apply {
-    width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: none;
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950);
-    font-family: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer; text-decoration: none;
-    transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-align: center;
-  }
-  .card-btn-apply:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.35); }
   .card-btn-arrow { transition: transform 0.3s ease; }
   .card-btn:hover .card-btn-arrow { transform: translateX(-4px); }
   .card-btn-disabled {
@@ -309,7 +301,7 @@
     <div class="header-top">
       <img src="logo.png" alt="Visa Immigration Logo" class="header-logo" />
       <a class="header-track-btn" href="https://vimvisa.github.io/panel/">جستجوی پرونده‌های موجود</a>
-       <a class="header-track-btn" href="https://vimvisa.github.io/panel/">ثبت درخواست ویزا</a>
+      <a class="header-track-btn" href="https://vimvisa.github.io/panel/">ثبت درخواست ویزا</a>
     </div>
     <div class="header-hero">
       <div class="header-badge">✦ مسیر مهاجرت شما، با تخصص ما</div>
@@ -455,10 +447,10 @@ var packages = [
     id: 1, active: true,
     title: 'پکیج ۱: ویزای درمانی ترکیه (فوری و تضمینی)',
     country: 'ترکیه', flag: '🇹🇷',
-    applyUrl: 'https://tally.so/r/Y5Xgaz',
     badge: { text: 'تضمینی', class: 'badge-gold' },
     image: 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'ویزای درمانی ترکیه برای بیماران نیازمند درمان فوری، با تضمین پذیرش و سرعت بالا در انجام مراحل.',
+    applyUrl: 'https://tally.so/r/Y5Xgaz',
     sections: [
       { title: 'هزینه‌ها', type: 'price', items: [
         { label: 'هزینه بیماران فوری', value: '۸,۸۰۰ دلار' },
@@ -483,10 +475,10 @@ var packages = [
     id: 2, active: true,
     title: 'پکیج ۲: بورسیه تحصیلی آلمان (ویژه بانوان افغانستان)',
     country: 'آلمان', flag: '🇩🇪',
-    applyUrl: 'https://tally.so/r/aQ120B',
     badge: { text: 'بانوان', class: 'badge-emerald' },
     image: 'https://images.pexels.com/photos/37120347/pexels-photo-37120347.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'بورسیه تحصیلی کامل ویژه بانوان افغان برای ادامه تحصیل در دانشگاه‌های آلمان، با پشتیبانی کامل.',
+    applyUrl: 'https://tally.so/r/aQ120B',
     sections: [
       { title: 'مخاطبین', type: 'text', content: 'این بورسیه به طور خاص برای بانوان افغان که دارای مدرک تحصیلی دیپلم یا لیسانس هستند و قصد ادامه تحصیل در مقطع فوق لیسانس یا دکتری در آلمان را دارند.' },
       { title: 'مزایا', type: 'list', items: [
@@ -511,10 +503,10 @@ var packages = [
     id: 3, active: true,
     title: 'پکیج ۳: تشکیل پرونده و پیگیری ویزای کاری/تحصیلی آلمان',
     country: 'آلمان', flag: '🇩🇪',
-    applyUrl: 'https://tally.so/r/A7NaVk',
     badge: { text: 'کاری/تحصیلی', class: 'badge-blue' },
     image: 'https://images.pexels.com/photos/32848467/pexels-photo-32848467.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'تشکیل کامل پرونده و پیگیری حرفه‌ای برای ویزای کاری یا تحصیلی آلمان، با تعرفه‌های شفاف و مشخص.',
+    applyUrl: 'https://tally.so/r/A7NaVk',
     sections: [
       { title: 'تعرفه‌های خدمات', type: 'price', items: [
         { label: 'مشاوره اولیه', value: '۱۵۰ افغانی' },
@@ -541,10 +533,10 @@ var packages = [
     id: 4, active: true,
     title: 'پکیج ۴: ارزیابی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP)',
     country: 'استرالیا', flag: '🇦🇺',
-    applyUrl: 'https://tally.so/r/81g5ro',
     badge: { text: 'بشردوستانه', class: 'badge-emerald' },
     image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'ارزیابی تخصصی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP) با مرحله اول کاملاً رایگان.',
+    applyUrl: 'https://tally.so/r/81g5ro',
     sections: [
       { title: 'هزینه‌ها', type: 'price', items: [
         { label: 'مرحله اول (ارزیابی)', value: 'رایگان', free: true },
@@ -567,133 +559,120 @@ var packages = [
   },
   {
     id: 5, active: true,
-    title: 'پکیج ۵: ویزای کاری یک‌ساله ایران',
-    country: 'ایران', flag: '🇮🇷',
-    applyUrl: 'https://tally.so/r/0QzjrA',
-    badge: { text: 'کاری', class: 'badge-blue' },
-    image: 'https://images.pexels.com/photos/38498918/pexels-photo-38498918.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'اخذ ویزای کاری یک‌ساله ایران با مراحل قانونی و پشتیبانی کامل جهت اشتغال.',
+    title: 'پکیج ۵: ویزای بشردوستانه کانادا',
+    country: 'کانادا', flag: '🇨🇦',
+    badge: { text: 'بشردوستانه', class: 'badge-emerald' },
+    image: 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'اقدام و پیگیری ویزای بشردوستانه کانادا برای افراد واجد شرایط و در خطر.',
+    applyUrl: 'https://tally.so/r/Gxayjo',
     sections: [
-      { title: 'هزینه‌ها', type: 'price', items: [
-        { label: 'هزینه اقدام', value: '۵,۰۰۰,۰۰۰ تومان' }
-      ]},
-      { title: 'مدت زمان', type: 'text', content: '۷ الی ۱۴ روز کاری' },
-      { title: 'مدارک مورد نیاز', type: 'list', items: [
-        'پاسپورت با حداقل ۶ ماه اعتبار',
-        'عکس پرسنلی جدید',
-        'پیشنهاد کار (Job Offer) در صورت موجود بودن'
-      ]}
+      { title: 'خدمات ما', type: 'text', content: 'مشاوره و ثبت‌نام کامل پرونده‌های بشردوستانه کانادا.' }
     ]
   },
   {
     id: 6, active: true,
-    title: 'پکیج ۶: ویزای بشردوستانه کانادا',
-    country: 'کانادا', flag: '🇨🇦',
-    applyUrl: 'https://tally.so/r/Gxayjo',
+    title: 'پکیج ۶: ویزای بشردوستانه فرانسه',
+    country: 'فرانسه', flag: '🇫🇷',
     badge: { text: 'بشردوستانه', class: 'badge-emerald' },
-    image: 'https://images.pexels.com/photos/12167747/pexels-photo-12167747.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'خدمات تخصصی پرونده‌های بشردوستانه و مهاجرت پناهندگی به کانادا.',
+    image: 'https://images.pexels.com/photos/37120347/pexels-photo-37120347.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'بررسی و پیگیری ویزای بشردوستانه فرانسه با همراهی کامل مشاورین.',
+    applyUrl: 'https://tally.so/r/RG1lVj',
     sections: [
-      { title: 'خدمات ما', type: 'list', items: [
-        'بررسی شرایط پرونده‌های حمایتی',
-        'تنظیم فرم‌ها و مدارک حقوقی',
-        'پیگیری وضعیت درخواست از سازمان‌های مربوطه'
-      ]}
+      { title: 'خدمات ما', type: 'text', content: 'مشاوره، آماده‌سازی و ارسال مدارک پرونده‌های فرانسه.' }
     ]
   },
   {
     id: 7, active: true,
-    title: 'پکیج ۷: ویزای بشردوستانه فرانسه',
-    country: 'فرانسه', flag: '🇫🇷',
-    applyUrl: 'https://tally.so/r/RG1lVj',
-    badge: { text: 'بشردوستانه', class: 'badge-emerald' },
-    image: 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'پشتیبانی و اقدام برای ویزای بشردوستانه و پناهندگی فرانسه.',
+    title: 'پکیج ۷: ویزای کاری یک‌ساله ایران',
+    country: 'ایران', flag: '🇮🇷',
+    badge: { text: 'کاری', class: 'badge-blue' },
+    image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'اخذ ویزای کاری یک‌ساله ایران با مراحل قانونی و سریع.',
+    applyUrl: 'https://tally.so/r/0QzjrA',
     sections: [
-      { title: 'خدمات ما', type: 'list', items: [
-        'مشاوره تخصصی پرونده‌های پناهندگی و بشردوستانه',
-        'راهنمایی در خصوص مدارک اثبات خطر'
-      ]}
+      { title: 'خدمات ما', type: 'text', content: 'تنظیم مدارک و اخذ ویزای کار معتبر ایران.' }
     ]
   }
 ];
 
-// Render Packages Grid
 var gridEl = document.getElementById('packagesGrid');
-packages.forEach(function(pkg) {
-  var card = document.createElement('div');
-  card.className = 'card' + (pkg.active ? '' : ' inactive');
-  card.innerHTML = `
-    <div class="card-image-wrap">
-      <img src="${pkg.image}" alt="${pkg.title}" class="card-image" loading="lazy" />
-      <div class="card-image-overlay"></div>
-      <span class="card-badge ${pkg.badge.class}">${pkg.badge.text}</span>
-      <div class="card-caption">
-        <div class="card-country"><span class="card-flag">${pkg.flag}</span>${pkg.country}</div>
-        <div class="card-title">${pkg.title}</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p class="card-summary">${pkg.summary}</p>
-      <div class="card-actions">
-        <button class="card-btn" data-id="${pkg.id}">
-          <span>مشاهده جزئیات کامل</span>
-          <span class="card-btn-arrow">←</span>
-        </button>
-        <a class="card-btn-apply" href="${pkg.applyUrl}" target="_blank" rel="noopener noreferrer">ثبت درخواست</a>
-      </div>
-    </div>
-  `;
-  gridEl.appendChild(card);
-});
-
-// Modal Logic
 var modalOverlay = document.getElementById('modalOverlay');
+var modal = document.getElementById('modal');
+var modalClose = document.getElementById('modalClose');
 var modalImage = document.getElementById('modalImage');
 var modalTitle = document.getElementById('modalTitle');
 var modalBody = document.getElementById('modalBody');
-var modalClose = document.getElementById('modalClose');
 
-document.querySelectorAll('.card-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var id = parseInt(this.getAttribute('data-id'));
-    var pkg = packages.find(function(p) { return p.id === id; });
-    if (!pkg) return;
+packages.forEach(function(pkg) {
+  var card = document.createElement('div');
+  card.className = 'card' + (pkg.active ? '' : ' inactive');
 
-    modalImage.src = pkg.image;
-    modalImage.alt = pkg.title;
-    modalTitle.textContent = pkg.title;
+  var imageHtml = '<div class="card-image-wrap">' +
+    '<img class="card-image" src="' + pkg.image + '" alt="' + pkg.title + '" />' +
+    '<div class="card-image-overlay"></div>' +
+    '<span class="card-badge ' + pkg.badge.class + '">' + pkg.badge.text + '</span>' +
+    '<div class="card-caption">' +
+      '<div class="card-country"><span class="card-flag">' + pkg.flag + '</span>' + pkg.country + '</div>' +
+      '<div class="card-title">' + pkg.title + '</div>' +
+    '</div>' +
+  '</div>';
 
-    var html = '';
-    pkg.sections.forEach(function(sec) {
-      html += '<section>';
-      html += '<div class="modal-section-title">' + sec.title + '</div>';
-      html += '<div class="modal-section-content">';
-      if (sec.type === 'text') {
-        html += '<p style="white-space: pre-line;">' + sec.content + '</p>';
-      } else if (sec.type === 'list') {
-        html += '<ul>';
-        sec.items.forEach(function(item) {
-          html += '<li>' + item + '</li>';
-        });
-        html += '</ul>';
-      } else if (sec.type === 'price') {
-        html += '<div class="price-box">';
-        sec.items.forEach(function(pItem) {
-          html += '<div class="price-tag">';
-          html += '<div class="price-tag-label">' + pItem.label + '</div>';
-          html += '<div class="price-tag-value' + (pItem.free ? ' free' : '') + '">' + pItem.value + '</div>';
-          html += '</div>';
-        });
-        html += '</div>';
-      }
-      html += '</div></section>';
-    });
+  var bodyHtml = '<div class="card-body">' +
+    '<div class="card-summary">' + pkg.summary + '</div>' +
+    (pkg.active ? 
+      '<div style="display:flex; gap:0.5rem; flex-direction:column;">' +
+        '<button class="card-btn" data-id="' + pkg.id + '">مشاهده جزئیات <span class="card-btn-arrow">←</span></button>' +
+        '<a class="card-btn" style="text-decoration:none; background:linear-gradient(135deg, var(--gold-400), var(--gold-500)); color:var(--navy-950);" href="' + pkg.applyUrl + '">ثبت درخواست</a>' +
+      '</div>'
+      : '<div class="card-btn-disabled">به زودی...</div>') +
+  '</div>';
 
-    modalBody.innerHTML = html;
-    modalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+  card.innerHTML = imageHtml + bodyHtml;
+  gridEl.appendChild(card);
+});
+
+gridEl.addEventListener('click', function(e) {
+  var btn = e.target.closest('.card-btn');
+  if (!btn || !btn.dataset.id) return;
+  var pkgId = parseInt(btn.dataset.id, 10);
+  var pkg = packages.find(function(p) { return p.id === pkgId; });
+  if (!pkg) return;
+
+  modalImage.src = pkg.image;
+  modalImage.alt = pkg.title;
+  modalTitle.textContent = pkg.title;
+
+  var bodyContent = '';
+  pkg.sections.forEach(function(sec) {
+    bodyContent += '<section>';
+    bodyContent += '<div class="modal-section-title">' + sec.title + '</div>';
+    bodyContent += '<div class="modal-section-content">';
+    if (sec.type === 'text') {
+      bodyContent += sec.content.replace(/\n/g, '<br>');
+    } else if (sec.type === 'price') {
+      bodyContent += '<div class="price-box">';
+      sec.items.forEach(function(item) {
+        bodyContent += '<div class="price-tag">' +
+          '<div class="price-tag-label">' + item.label + '</div>' +
+          '<div class="price-tag-value' + (item.free ? ' free' : '') + '">' + item.value + '</div>' +
+        '</div>';
+      });
+      bodyContent += '</div>';
+    } else if (sec.type === 'list') {
+      bodyContent += '<ul>';
+      sec.items.forEach(function(li) {
+        bodyContent += '<li>' + li + '</li>';
+      });
+      bodyContent += '</ul>';
+    }
+    bodyContent += '</div></section>';
   });
+
+  bodyContent += '<div style="margin-top: 1.5rem;"><a class="card-btn" style="text-decoration:none; background:linear-gradient(135deg, var(--gold-400), var(--gold-500)); color:var(--navy-950);" href="' + pkg.applyUrl + '">ثبت درخواست این پکیج</a></div>';
+
+  modalBody.innerHTML = bodyContent;
+  modalOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
 });
 
 function closeModal() {
