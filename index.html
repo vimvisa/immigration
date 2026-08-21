@@ -591,9 +591,37 @@ var packages = [
     sections: [
       { title: 'خدمات ما', type: 'text', content: 'تنظیم مدارک و اخذ ویزای کار معتبر ایران.' }
     ]
+  },
+{
+    id: 5, active: true,
+    title: 'پکیج ۵: ویزای بشردوستانه عمومی و اقامت حمایتی بین‌المللی',
+    country: 'بین‌المللی', flag: '🌍',
+    badge: { text: 'عمومی', class: 'badge-emerald' },
+    image: 'https://images.pexels.com/photos/12167747/pexels-photo-12167747.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'خدمات جامع مشاوره و تشکیل پرونده برای دریافت ویزاها و برنامه‌های حمایتی بشردوستانه عمومی در کشورهای مختلف.',
+    applyUrl: 'https://tally.so/r/0Qzrp0',
+    sections: [
+      { title: 'هزینه‌ها', type: 'price', items: [
+        { label: 'مشاوره و ارزیابی پرونده', value: '۵۰ دلار' },
+        { label: 'ثبت و پیگیری کامل', value: '۳۵۰ دلار' }
+      ]},
+      { title: 'درباره پکیج', type: 'text', content: 'این پکیج برای افرادی طراحی شده است که به دلیل شرایط بحرانی، تهدیدات امنیتی یا مشکلات حقوقی در کشور مبدأ، به دنبال پناهگاه امن یا استفاده از برنامه‌های ویژه پذیرش بشردوستانه بین‌المللی هستند.' },
+      { title: 'خدمات ما', type: 'list', items: [
+        'بررسی دقیق شرایط فردی و خانوادگی',
+        'تهیه و تنظیم فرم‌ها و مستندات حمایتی',
+        'ارتباط با نهادها و سازمان‌های همکار',
+        'راهنمایی و آمادگی کامل برای مصاحبه‌ها',
+        'پیگیری مستمر تا دریافت پاسخ نهایی'
+      ]},
+      { title: 'مدارک مورد نیاز', type: 'list', items: [
+        'پاسپورت یا مدارک هویتی معتبر',
+        'شواهد و مستندات دال بر شرایط اضطراری',
+        'فرم‌های تکمیل‌شده درخواست',
+        'عکس پرسنلی استاندارد'
+      ]}
+    ]
   }
 ]
-
 var gridEl = document.getElementById('packagesGrid');
 var modalOverlay = document.getElementById('modalOverlay');
 var modal = document.getElementById('modal');
