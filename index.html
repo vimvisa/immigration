@@ -201,11 +201,6 @@
   .card-btn-apply:hover {
     transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.3);
   }
-  .card-btn-disabled {
-    width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: 2px dashed var(--slate-300);
-    background: var(--slate-100); color: var(--slate-500); font-family: inherit; font-size: 0.875rem; font-weight: 700;
-    cursor: not-allowed; text-align: center;
-  }
 
   /* ===== Modal ===== */
   .modal-overlay {
@@ -384,14 +379,14 @@
           <a href="mailto:immigration.tehran@tuta.io">immigration.tehran@tuta.io</a>
         </div>
         <div class="footer-contact-item">
-          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></span>
+          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5 z"/></svg></span>
           <span>گلبهار سنتر، منزل تحتانی، دفتر شماره ۷۰۶</span>
         </div>
       </div>
       <div>
         <div class="footer-col-title">دسترسی سریع</div>
         <div class="footer-links">
-          <a class="footer-link-btn primary" href="https://tally.so/r/0Qzrp0"> ثبت درخواست ویزا</a>
+          <a class="footer-link-btn primary" href="https://tally.so/r/0Qzrp0">   تشکیل پرونده بین المللی</a>
           <a class="footer-link-btn secondary" href="https://vimvisa.github.io/panel/"> بررسی وضیعت درخواست </a>
         </div>
       </div>
@@ -596,7 +591,7 @@ packages.forEach(function(pkg) {
       '<div class="card-actions">' +
         '<button class="card-btn card-btn-details" data-id="' + pkg.id + '">توضیحات بیشتر</button>' +
         (pkg.active 
-          ? '<a class="card-btn card-btn-apply" href="' + pkg.applyUrl + '" target="_blank" rel="noopener">ثبت نام</a>' 
+          ? '<a class="card-btn card-btn-apply" href="' + pkg.applyUrl + '">ثبت نام</a>' 
           : '<span class="card-btn" style="background:var(--slate-200); color:var(--slate-400); cursor:not-allowed;">تکمیل ظرفیت</span>') +
       '</div>' +
     '</div>';
@@ -651,7 +646,7 @@ document.querySelectorAll('.card-btn-details').forEach(function(btn) {
     // Add apply button inside modal body as well for convenience
     if (pkg.active) {
       bodyHtml += '<div style="margin-top: 1.5rem; text-align: center;">';
-      bodyHtml += '<a href="' + pkg.applyUrl + '" target="_blank" rel="noopener" style="display: inline-block; width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950); font-weight: 700; border-radius: 12px; text-decoration: none; text-align: center;">تکمیل فرم ثبت‌نام این پکیج</a>';
+      bodyHtml += '<a href="' + pkg.applyUrl + '" style="display: inline-block; width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950); font-weight: 700; border-radius: 12px; text-decoration: none; text-align: center;">تکمیل فرم ثبت‌نام این پکیج</a>';
       bodyHtml += '</div>';
     }
 
