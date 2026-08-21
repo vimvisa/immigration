@@ -11,387 +11,567 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --navy-950: #0a1628;
-    --navy-900: #0f2747;
-    --navy-800: #16365f;
-    --navy-700: #1e4a7a;
-    --slate-600: #475569;
-    --slate-500: #64748b;
-    --slate-400: #94a3b8;
-    --slate-300: #cbd5e1;
-    --slate-200: #e2e8f0;
-    --slate-100: #f1f5f9;
-    --slate-50: #f8fafc;
-    --gold-400: #e2b567;
-    --gold-500: #cfa052;
-    --white: #ffffff;
-    --emerald-500: #10b981;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Vazirmatn', system-ui, sans-serif;
-    background: var(--slate-50);
-    color: #1e293b;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+  :root {
+    --navy-950: #0a1628;
+    --navy-900: #0f2747;
+    --navy-800: #16365f;
+    --navy-700: #1e4a7a;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --slate-300: #cbd5e1;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50: #f8fafc;
+    --gold-400: #e2b567;
+    --gold-500: #cfa052;
+    --white: #ffffff;
+    --emerald-500: #10b981;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+    background: var(--slate-50);
+    color: #1e293b;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-  /* ===== Loading Screen ===== */
-  .loader-screen {
-    position: fixed; inset: 0; z-index: 9999;
-    background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-  }
-  .loader-screen.hidden { opacity: 0; visibility: hidden; }
-  .loader-logo {
-    width: 110px; height: 110px; border-radius: 24px;
-    animation: logoPulse 2s ease-in-out infinite;
-  }
-  @keyframes logoPulse {
-    0%,100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.08); opacity: 0.85; }
-  }
-  .loader-ring {
-    width: 44px; height: 44px;
-    border: 3px solid rgba(226,181,103,0.2);
-    border-top-color: var(--gold-400);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loader-text {
-    color: var(--gold-400); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;
-    animation: textFade 1.5s ease-in-out infinite;
-  }
-  @keyframes textFade { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+  /* ===== Loading Screen ===== */
+  .loader-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .loader-screen.hidden { opacity: 0; visibility: hidden; }
+  .loader-logo {
+    width: 110px; height: 110px; border-radius: 24px;
+    animation: logoPulse 2s ease-in-out infinite;
+  }
+  @keyframes logoPulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.85; }
+  }
+  .loader-ring {
+    width: 44px; height: 44px;
+    border: 3px solid rgba(226,181,103,0.2);
+    border-top-color: var(--gold-400);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text {
+    color: var(--gold-400); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em;
+    animation: textFade 1.5s ease-in-out infinite;
+  }
+  @keyframes textFade { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
 
-  /* ===== Header ===== */
-  .header {
-    position: relative; min-height: 520px; overflow: hidden;
-    background: var(--navy-950);
-  }
-  .header-slideshow { position: absolute; inset: 0; }
-  .header-slide {
-    position: absolute; inset: 0; opacity: 0;
-    transition: opacity 1.5s ease;
-    background-size: cover; background-position: center;
-  }
-  .header-slide.active { opacity: 1; }
-  .header-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(10,22,40,0.85) 0%, rgba(15,39,71,0.7) 50%, rgba(10,22,40,0.88) 100%);
-  }
-  .header-content {
-    position: relative; z-index: 10;
-    max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem;
-    min-height: 520px; display: flex; flex-direction: column;
-  }
-  .header-top {
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-    padding-bottom: 2.5rem;
-  }
-  .header-logo { width: 56px; height: 56px; border-radius: 14px; object-fit: cover; flex-shrink: 0; box-shadow: 0 4px 16px rgba(226,181,103,0.25); }
-  .header-track-btn {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.65rem 1.5rem; border-radius: 999px;
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
-    color: var(--navy-950); font-family: inherit; font-size: 0.82rem; font-weight: 700;
-    text-decoration: none; white-space: nowrap;
-    transition: all 0.3s ease;
-  }
-  .header-track-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.35); }
-  .header-hero { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-  .header-badge {
-    display: inline-flex; align-self: center; align-items: center; gap: 0.5rem;
-    padding: 0.4rem 1.2rem; border-radius: 999px;
-    background: rgba(226,181,103,0.12); border: 1px solid rgba(226,181,103,0.3);
-    color: var(--gold-400); font-size: 0.78rem; font-weight: 600; margin-bottom: 1.5rem;
-  }
-  .header-hero h1 { font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1.25; margin-bottom: 1rem; }
-  .header-hero h1 span { color: var(--gold-400); }
-  .header-hero p { font-size: 1rem; color: var(--slate-200); max-width: 560px; margin: 0 auto; }
-  .header-dots { display: flex; justify-content: center; gap: 0.5rem; padding-top: 2rem; }
-  .header-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease;
-  }
-  .header-dot.active { background: var(--gold-400); width: 28px; border-radius: 4px; }
-  @media (max-width: 640px) {
-    .header { min-height: 460px; }
-    .header-content { min-height: 460px; padding: 1rem 1rem 2rem; }
-    .header-top { padding-bottom: 1.5rem; }
-    .header-logo { width: 44px; height: 44px; }
-    .header-track-btn { padding: 0.5rem 1rem; font-size: 0.72rem; }
-    .header-hero h1 { font-size: 1.55rem; }
-    .header-hero p { font-size: 0.88rem; }
-  }
+  /* ===== Header ===== */
+  .header {
+    position: relative; min-height: 520px; overflow: hidden;
+    background: var(--navy-950);
+  }
+  .header-slideshow { position: absolute; inset: 0; }
+  .header-slide {
+    position: absolute; inset: 0; opacity: 0;
+    transition: opacity 1.5s ease;
+    background-size: cover; background-position: center;
+  }
+  .header-slide.active { opacity: 1; }
+  .header-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(10,22,40,0.85) 0%, rgba(15,39,71,0.7) 50%, rgba(10,22,40,0.88) 100%);
+  }
+  .header-content {
+    position: relative; z-index: 10;
+    max-width: 1200px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem;
+    min-height: 520px; display: flex; flex-direction: column;
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding-bottom: 2.5rem;
+  }
+  .header-logo { width: 56px; height: 56px; border-radius: 14px; object-fit: cover; flex-shrink: 0; box-shadow: 0 4px 16px rgba(226,181,103,0.25); }
+  .header-track-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.5rem; border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    color: var(--navy-950); font-family: inherit; font-size: 0.82rem; font-weight: 700;
+    text-decoration: none; white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+  .header-track-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.35); }
+  .header-hero { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  .header-badge {
+    display: inline-flex; align-self: center; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1.2rem; border-radius: 999px;
+    background: rgba(226,181,103,0.12); border: 1px solid rgba(226,181,103,0.3);
+    color: var(--gold-400); font-size: 0.78rem; font-weight: 600; margin-bottom: 1.5rem;
+  }
+  .header-hero h1 { font-size: 2.4rem; font-weight: 800; color: var(--white); line-height: 1.25; margin-bottom: 1rem; }
+  .header-hero h1 span { color: var(--gold-400); }
+  .header-hero p { font-size: 1rem; color: var(--slate-200); max-width: 560px; margin: 0 auto; }
+  .header-dots { display: flex; justify-content: center; gap: 0.5rem; padding-top: 2rem; }
+  .header-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease;
+  }
+  .header-dot.active { background: var(--gold-400); width: 28px; border-radius: 4px; }
+  @media (max-width: 640px) {
+    .header { min-height: 460px; }
+    .header-content { min-height: 460px; padding: 1rem 1rem 2rem; }
+    .header-top { padding-bottom: 1.5rem; }
+    .header-logo { width: 44px; height: 44px; }
+    .header-track-btn { padding: 0.5rem 1rem; font-size: 0.72rem; }
+    .header-hero h1 { font-size: 1.55rem; }
+    .header-hero p { font-size: 0.88rem; }
+  }
 
-  /* ===== Packages Section ===== */
-  .packages {
-    max-width: 1200px; margin: -2.5rem auto 0; padding: 0 1.5rem 4rem; position: relative; z-index: 5;
-  }
-  .section-title { text-align: center; margin-bottom: 2.5rem; }
-  .section-title h2 { font-size: 1.75rem; font-weight: 700; color: var(--navy-950); margin-bottom: 0.5rem; }
-  .section-title p { color: var(--slate-600); font-size: 0.95rem; }
-  .packages-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.75rem;
-  }
-  @media (max-width: 640px) { .packages-grid { grid-template-columns: 1fr; gap: 1.25rem; } .section-title h2 { font-size: 1.4rem; } }
+  /* ===== Packages Section ===== */
+  .packages {
+    max-width: 1200px; margin: -2.5rem auto 0; padding: 0 1.5rem 4rem; position: relative; z-index: 5;
+  }
+  .section-title { text-align: center; margin-bottom: 2.5rem; }
+  .section-title h2 { font-size: 1.75rem; font-weight: 700; color: var(--navy-950); margin-bottom: 0.5rem; }
+  .section-title p { color: var(--slate-600); font-size: 0.95rem; }
+  .packages-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.75rem;
+  }
+  @media (max-width: 640px) { .packages-grid { grid-template-columns: 1fr; gap: 1.25rem; } .section-title h2 { font-size: 1.4rem; } }
 
-  /* ===== Card ===== */
-  .card {
-    background: var(--white); border-radius: 18px; overflow: hidden;
-    box-shadow: 0 4px 24px rgba(10,22,40,0.08); border: 1px solid var(--slate-200);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    display: flex; flex-direction: column;
-    opacity: 0; transform: translateY(30px); animation: fadeUp 0.6s ease forwards;
-  }
-  .card:nth-child(1) { animation-delay: 0.05s; }
-  .card:nth-child(2) { animation-delay: 0.1s; }
-  .card:nth-child(3) { animation-delay: 0.15s; }
-  .card:nth-child(4) { animation-delay: 0.2s; }
-  .card:nth-child(5) { animation-delay: 0.25s; }
-  .card:nth-child(6) { animation-delay: 0.3s; }
-  .card:nth-child(7) { animation-delay: 0.35s; }
-  .card:nth-child(8) { animation-delay: 0.4s; }
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-  .card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(10,22,40,0.15); }
-  .card.inactive { filter: grayscale(0.7) opacity(0.65); }
-  .card.inactive:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10,22,40,0.1); }
+  /* ===== Card ===== */
+  .card {
+    background: var(--white); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 4px 24px rgba(10,22,40,0.08); border: 1px solid var(--slate-200);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(30px); animation: fadeUp 0.6s ease forwards;
+  }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.2s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.3s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+  .card:nth-child(8) { animation-delay: 0.4s; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(10,22,40,0.15); }
+  .card.inactive { filter: grayscale(0.7) opacity(0.65); }
+  .card.inactive:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10,22,40,0.1); }
 
-  .card-image-wrap { position: relative; width: 100%; aspect-ratio: 1200 / 630; overflow: hidden; background: var(--slate-100); }
-  .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-  .card:hover .card-image { transform: scale(1.05); }
-  .card-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.78) 0%, transparent 55%); }
-  .card-badge {
-    position: absolute; top: 1rem; right: 1rem; padding: 0.3rem 0.9rem; border-radius: 999px;
-    font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(8px);
-  }
-  .badge-gold { background: rgba(226,181,103,0.9); color: var(--navy-950); }
-  .badge-emerald { background: rgba(16,185,129,0.9); color: white; }
-  .badge-blue { background: rgba(30,74,122,0.9); color: white; }
-  .badge-inactive { background: rgba(100,116,139,0.92); color: white; }
-  .card-caption { position: absolute; bottom: 0; right: 0; left: 0; padding: 1.25rem 1.5rem; }
-  .card-country { font-size: 0.8rem; color: var(--gold-400); font-weight: 600; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
-  .card-flag { font-size: 1.1rem; line-height: 1; }
-  .card-title { font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.4; }
-  .card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
-  .card-summary { font-size: 0.875rem; color: var(--slate-600); margin-bottom: 1.25rem; flex: 1; }
-  .card-btn {
-    width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: none;
-    background: linear-gradient(135deg, var(--navy-800), var(--navy-700)); color: var(--white);
-    font-family: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer;
-    transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  }
-  .card-btn:hover { background: linear-gradient(135deg, var(--navy-700), var(--gold-500)); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,22,40,0.2); }
-  .card-btn-arrow { transition: transform 0.3s ease; }
-  .card-btn:hover .card-btn-arrow { transform: translateX(-4px); }
-  .card-btn-disabled {
-    width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: 2px dashed var(--slate-300);
-    background: var(--slate-100); color: var(--slate-500); font-family: inherit; font-size: 0.875rem; font-weight: 700;
-    cursor: not-allowed; text-align: center;
-  }
+  .card-image-wrap { position: relative; width: 100%; aspect-ratio: 1200 / 630; overflow: hidden; background: var(--slate-100); }
+  .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .card:hover .card-image { transform: scale(1.05); }
+  .card-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.78) 0%, transparent 55%); }
+  .card-badge {
+    position: absolute; top: 1rem; right: 1rem; padding: 0.3rem 0.9rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(8px);
+  }
+  .badge-gold { background: rgba(226,181,103,0.9); color: var(--navy-950); }
+  .badge-emerald { background: rgba(16,185,129,0.9); color: white; }
+  .badge-blue { background: rgba(30,74,122,0.9); color: white; }
+  .badge-inactive { background: rgba(100,116,139,0.92); color: white; }
+  .card-caption { position: absolute; bottom: 0; right: 0; left: 0; padding: 1.25rem 1.5rem; }
+  .card-country { font-size: 0.8rem; color: var(--gold-400); font-weight: 600; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
+  .card-flag { font-size: 1.1rem; line-height: 1; }
+  .card-title { font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.4; }
+  .card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .card-summary { font-size: 0.875rem; color: var(--slate-600); margin-bottom: 1.25rem; flex: 1; }
+  .card-btn {
+    width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: none;
+    background: linear-gradient(135deg, var(--navy-800), var(--navy-700)); color: var(--white);
+    font-family: inherit; font-size: 0.875rem; font-weight: 700; cursor: pointer;
+    transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .card-btn:hover { background: linear-gradient(135deg, var(--navy-700), var(--gold-500)); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10,22,40,0.2); }
+  .card-btn-arrow { transition: transform 0.3s ease; }
+  .card-btn:hover .card-btn-arrow { transform: translateX(-4px); }
+  .card-btn-disabled {
+    width: 100%; padding: 0.85rem 1.5rem; border-radius: 12px; border: 2px dashed var(--slate-300);
+    background: var(--slate-100); color: var(--slate-500); font-family: inherit; font-size: 0.875rem; font-weight: 700;
+    cursor: not-allowed; text-align: center;
+  }
 
-  /* ===== Modal ===== */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(10,22,40,0.65); backdrop-filter: blur(6px); z-index: 1000;
-    display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto;
-    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-  .modal-overlay.active { opacity: 1; visibility: visible; }
-  .modal {
-    background: var(--white); border-radius: 20px; max-width: 680px; width: 100%; margin: auto; overflow: hidden;
-    box-shadow: 0 24px 64px rgba(10,22,40,0.3); transform: translateY(40px) scale(0.96); opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
-  }
-  .modal-overlay.active .modal { transform: translateY(0) scale(1); opacity: 1; }
-  .modal-header { position: relative; height: 180px; overflow: hidden; }
-  .modal-header img { width: 100%; height: 100%; object-fit: cover; }
-  .modal-header-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.88) 0%, rgba(10,22,40,0.3) 60%, transparent 100%); }
-  .modal-header-content { position: absolute; bottom: 0; right: 0; left: 0; padding: 1.5rem 2rem; }
-  .modal-header-content h3 { font-size: 1.25rem; font-weight: 700; color: var(--white); line-height: 1.4; }
-  .modal-close {
-    position: absolute; top: 1rem; left: 1rem; width: 40px; height: 40px; border-radius: 50%; border: none;
-    background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); color: white; font-size: 1.2rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: background 0.3s ease, transform 0.3s ease; z-index: 2;
-  }
-  .modal-close:hover { background: rgba(239,68,68,0.85); transform: rotate(90deg); }
-  .modal-body { padding: 1.75rem 2rem 2rem; }
-  .modal-body section { margin-bottom: 1.5rem; }
-  .modal-body section:last-child { margin-bottom: 0; }
-  .modal-section-title {
-    font-size: 0.95rem; font-weight: 700; color: var(--navy-800); margin-bottom: 0.75rem; padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--slate-100); display: flex; align-items: center; gap: 0.5rem;
-  }
-  .modal-section-title::before { content: ''; width: 4px; height: 18px; border-radius: 2px; background: var(--gold-400); }
-  .modal-section-content { font-size: 0.9rem; color: var(--slate-600); line-height: 1.8; }
-  .modal-section-content ul { list-style: none; padding: 0; }
-  .modal-section-content li { padding-right: 1.5rem; position: relative; margin-bottom: 0.5rem; }
-  .modal-section-content li::before { content: '◆'; position: absolute; right: 0; color: var(--gold-400); font-size: 0.65rem; top: 4px; }
-  .price-box { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .price-tag { flex: 1; min-width: 140px; padding: 0.85rem 1.1rem; border-radius: 12px; background: var(--slate-50); border: 1px solid var(--slate-200); }
-  .price-tag-label { font-size: 0.75rem; color: var(--slate-400); font-weight: 600; margin-bottom: 0.25rem; }
-  .price-tag-value { font-size: 1.15rem; font-weight: 800; color: var(--navy-800); }
-  .price-tag-value.free { color: var(--emerald-500); }
-  @media (max-width: 640px) {
-    .modal-header { height: 140px; } .modal-header-content { padding: 1.25rem; } .modal-header-content h3 { font-size: 1.05rem; }
-    .modal-body { padding: 1.25rem; } .modal-overlay { padding: 0; } .modal { border-radius: 0; min-height: 100vh; }
-  }
+  /* ===== Modal ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(10,22,40,0.65); backdrop-filter: blur(6px); z-index: 1000;
+    display: flex; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .modal-overlay.active { opacity: 1; visibility: visible; }
+  .modal {
+    background: var(--white); border-radius: 20px; max-width: 680px; width: 100%; margin: auto; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(10,22,40,0.3); transform: translateY(40px) scale(0.96); opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+  }
+  .modal-overlay.active .modal { transform: translateY(0) scale(1); opacity: 1; }
+  .modal-header { position: relative; height: 180px; overflow: hidden; }
+  .modal-header img { width: 100%; height: 100%; object-fit: cover; }
+  .modal-header-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.88) 0%, rgba(10,22,40,0.3) 60%, transparent 100%); }
+  .modal-header-content { position: absolute; bottom: 0; right: 0; left: 0; padding: 1.5rem 2rem; }
+  .modal-header-content h3 { font-size: 1.25rem; font-weight: 700; color: var(--white); line-height: 1.4; }
+  .modal-close {
+    position: absolute; top: 1rem; left: 1rem; width: 40px; height: 40px; border-radius: 50%; border: none;
+    background: rgba(255,255,255,0.2); backdrop-filter: blur(8px); color: white; font-size: 1.2rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: background 0.3s ease, transform 0.3s ease; z-index: 2;
+  }
+  .modal-close:hover { background: rgba(239,68,68,0.85); transform: rotate(90deg); }
+  .modal-body { padding: 1.75rem 2rem 2rem; }
+  .modal-body section { margin-bottom: 1.5rem; }
+  .modal-body section:last-child { margin-bottom: 0; }
+  .modal-section-title {
+    font-size: 0.95rem; font-weight: 700; color: var(--navy-800); margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--slate-100); display: flex; align-items: center; gap: 0.5rem;
+  }
+  .modal-section-title::before { content: ''; width: 4px; height: 18px; border-radius: 2px; background: var(--gold-400); }
+  .modal-section-content { font-size: 0.9rem; color: var(--slate-600); line-height: 1.8; }
+  .modal-section-content ul { list-style: none; padding: 0; }
+  .modal-section-content li { padding-right: 1.5rem; position: relative; margin-bottom: 0.5rem; }
+  .modal-section-content li::before { content: '◆'; position: absolute; right: 0; color: var(--gold-400); font-size: 0.65rem; top: 4px; }
+  .price-box { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .price-tag { flex: 1; min-width: 140px; padding: 0.85rem 1.1rem; border-radius: 12px; background: var(--slate-50); border: 1px solid var(--slate-200); }
+  .price-tag-label { font-size: 0.75rem; color: var(--slate-400); font-weight: 600; margin-bottom: 0.25rem; }
+  .price-tag-value { font-size: 1.15rem; font-weight: 800; color: var(--navy-800); }
+  .price-tag-value.free { color: var(--emerald-500); }
+  @media (max-width: 640px) {
+    .modal-header { height: 140px; } .modal-header-content { padding: 1.25rem; } .modal-header-content h3 { font-size: 1.05rem; }
+    .modal-body { padding: 1.25rem; } .modal-overlay { padding: 0; } .modal { border-radius: 0; min-height: 100vh; }
+  }
 
-  /* ===== Footer ===== */
-  .footer { background: var(--navy-950); color: var(--slate-400); padding: 3rem 1.5rem 2rem; }
-  .footer-inner { max-width: 1200px; margin: 0 auto; }
-  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
-  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
-  .footer-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
-  .footer-logo { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; }
-  .footer-name { font-weight: 800; font-size: 1.1rem; color: var(--white); }
-  .footer-slogan { font-size: 0.78rem; color: var(--gold-400); margin-top: 2px; }
-  .footer-desc { font-size: 0.85rem; line-height: 1.7; margin-bottom: 1.25rem; }
-  .footer-social { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-  .social-link {
-    width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12);
-    display: flex; align-items: center; justify-content: center; color: var(--slate-400); text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  .social-link svg { width: 22px; height: 22px; fill: currentColor; }
-  .social-link:hover { border-color: var(--gold-400); color: var(--gold-400); transform: translateY(-3px); }
-  .footer-col-title { font-size: 0.78rem; font-weight: 700; color: var(--gold-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; }
-  .footer-contact-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.85rem; font-size: 0.85rem; }
-  .footer-contact-item a { color: var(--slate-400); text-decoration: none; transition: color 0.3s ease; }
-  .footer-contact-item a:hover { color: var(--gold-400); }
-  .footer-contact-icon { color: var(--gold-400); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; }
-  .footer-contact-icon svg { width: 18px; height: 18px; fill: currentColor; }
-  .footer-links { display: flex; flex-direction: column; gap: 0.75rem; }
-  .footer-link-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    padding: 0.75rem 1.25rem; border-radius: 10px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s ease;
-  }
-  .footer-link-btn.primary { background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950); }
-  .footer-link-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.25); }
-  .footer-link-btn.secondary { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--white); }
-  .footer-link-btn.secondary:hover { border-color: var(--gold-400); color: var(--gold-400); }
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.78rem;
-  }
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: var(--slate-100); }
-  ::-webkit-scrollbar-thumb { background: var(--navy-700); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--navy-800); }
+  /* ===== Footer ===== */
+  .footer { background: var(--navy-950); color: var(--slate-400); padding: 3rem 1.5rem 2rem; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2.5rem; }
+  @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
+  .footer-brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .footer-logo { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; }
+  .footer-name { font-weight: 800; font-size: 1.1rem; color: var(--white); }
+  .footer-slogan { font-size: 0.78rem; color: var(--gold-400); margin-top: 2px; }
+  .footer-desc { font-size: 0.85rem; line-height: 1.7; margin-bottom: 1.25rem; }
+  .footer-social { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .social-link {
+    width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center; color: var(--slate-400); text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .social-link svg { width: 22px; height: 22px; fill: currentColor; }
+  .social-link:hover { border-color: var(--gold-400); color: var(--gold-400); transform: translateY(-3px); }
+  .footer-col-title { font-size: 0.78rem; font-weight: 700; color: var(--gold-400); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem; }
+  .footer-contact-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.85rem; font-size: 0.85rem; }
+  .footer-contact-item a { color: var(--slate-400); text-decoration: none; transition: color 0.3s ease; }
+  .footer-contact-item a:hover { color: var(--gold-400); }
+  .footer-contact-icon { color: var(--gold-400); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; }
+  .footer-contact-icon svg { width: 18px; height: 18px; fill: currentColor; }
+  .footer-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-link-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.75rem 1.25rem; border-radius: 10px; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.3s ease;
+  }
+  .footer-link-btn.primary { background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950); }
+  .footer-link-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.25); }
+  .footer-link-btn.secondary { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--white); }
+  .footer-link-btn.secondary:hover { border-color: var(--gold-400); color: var(--gold-400); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.78rem;
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--slate-100); }
+  ::-webkit-scrollbar-thumb { background: var(--navy-700); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--navy-800); }
 </style>
 </head>
 <body>
 
 <!-- ===== Loading Screen ===== -->
 <div class="loader-screen" id="loaderScreen">
-  <img src="logo.png" alt="VIM Logo" class="loader-logo" />
-  <div class="loader-ring"></div>
-  <div class="loader-text">در حال بارگذاری...</div>
+  <img src="logo.png" alt="VIM Logo" class="loader-logo" />
+  <div class="loader-ring"></div>
+  <div class="loader-text">در حال بارگذاری...</div>
 </div>
 
 <!-- ===== Header ===== -->
 <header class="header">
-  <div class="header-slideshow" id="headerSlideshow"></div>
-  <div class="header-overlay"></div>
-  <div class="header-content">
-    <div class="header-top">
-      <img src="logo.png" alt="Visa Immigration Logo" class="header-logo" />
-      <a class="header-track-btn" href="https://vimvisa.github.io/panel/">بررسی وضیعت درخواست</a>
-    </div>
-    <div class="header-hero">
-      <div class="header-badge">✦ مسیر مهاجرت شما، با تخصص ما</div>
-      <h1>مسیر مهاجرت خود را <span>با اطمینان</span> آغاز کنید</h1>
-      <p>ما با تعهد، شفافیت و همراهی کامل، شما را تا رسیدن به مقصد نهایی راهنمایی می‌کنیم. پکیج‌های تخصصی ما برای ویزای تحصیلی، کاری، درمانی و بشردوستانه طراحی شده‌اند.</p>
-    </div>
-    <div class="header-dots" id="headerDots"></div>
-  </div>
+  <div class="header-slideshow" id="headerSlideshow"></div>
+  <div class="header-overlay"></div>
+  <div class="header-content">
+    <div class="header-top">
+      <img src="logo.png" alt="Visa Immigration Logo" class="header-logo" />
+      <a class="header-track-btn" href="https://vimvisa.github.io/panel/">بررسی وضیعت درخواست</a>
+    </div>
+    <div class="header-hero">
+      <div class="header-badge">✦ مسیر مهاجرت شما، با تخصص ما</div>
+      <h1>مسیر مهاجرت خود را <span>با اطمینان</span> آغاز کنید</h1>
+      <p>ما با تعهد، شفافیت و همراهی کامل، شما را تا رسیدن به مقصد نهایی راهنمایی می‌کنیم. پکیج‌های تخصصی ما برای ویزای تحصیلی، کاری، درمانی و بشردوستانه طراحی شده‌اند.</p>
+    </div>
+    <div class="header-dots" id="headerDots"></div>
+  </div>
 </header>
 
 <!-- ===== Packages ===== -->
 <section class="packages" id="packages">
-  <div class="section-title">
-    <h2>پکیج‌های مهاجرتی ما</h2>
-    <p>برای مشاهده جزئیات کامل هر پکیج، روی دکمه کلیک کنید</p>
-  </div>
-  <div class="packages-grid" id="packagesGrid"></div>
+  <div class="section-title">
+    <h2>پکیج‌های مهاجرتی ما</h2>
+    <p>برای مشاهده جزئیات کامل هر پکیج، روی دکمه کلیک کنید</p>
+  </div>
+  <div class="packages-grid" id="packagesGrid"></div>
 </section>
 
 <!-- ===== Modal ===== -->
 <div class="modal-overlay" id="modalOverlay">
-  <div class="modal" id="modal">
-    <div class="modal-header">
-      <img id="modalImage" src="" alt="" />
-      <div class="modal-header-overlay"></div>
-      <button class="modal-close" id="modalClose" aria-label="بستن">✕</button>
-      <div class="modal-header-content"><h3 id="modalTitle"></h3></div>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-  </div>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <img id="modalImage" src="" alt="" />
+      <div class="modal-header-overlay"></div>
+      <button class="modal-close" id="modalClose" aria-label="بستن">✕</button>
+      <div class="modal-header-content"><h3 id="modalTitle"></h3></div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
 </div>
 
 <!-- ===== Footer ===== -->
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <img src="logo.png" alt="VIM Logo" class="footer-logo" />
-          <div>
-            <div class="footer-name">Visa Immigration</div>
-            <div class="footer-slogan">تعهد | شفافیت | همراهی</div>
-          </div>
-        </div>
-        <p class="footer-desc">شرکت VIM با سال‌ها تجربه در زمینه مهاجرت، شما را در تمام مراحل دریافت ویزای درمانی، تحصیلی، کاری و بشردوستانه همراهی می‌کند. شفافیت و صداقت، اساس کار ماست.</p>
-        <div class="footer-social">
-          <a class="social-link" href="https://wa.me/0093780412583" aria-label="WhatsApp" title="WhatsApp">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.89-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          </a>
-          <a class="social-link" href="tel:0093780412583" aria-label="Phone" title="Phone">
-            <svg viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
-          </a>
-          <a class="social-link" href="mailto:immigration.tehran@tuta.io" aria-label="Email" title="Email">
-            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          </a>
-          <a class="social-link" href="https://instagram.com/visa_immigration2026" aria-label="Instagram" title="Instagram">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">اطلاعات تماس</div>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg></span>
-          <a href="tel:0093780412583">0093780412583</a>
-        </div>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
-          <a href="mailto:immigration.tehran@tuta.io">immigration.tehran@tuta.io</a>
-        </div>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></span>
-          <span>گلبهار سنتر، منزل تحتانی، دفتر شماره ۷۰۶</span>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">دسترسی سریع</div>
-        <div class="footer-links">
-          <a class="footer-link-btn primary" href="https://tally.so/r/0Qzrp0"> تشکیل پرونده بین المللی  </a>
-          <a class="footer-link-btn secondary" href="https://vimvisa.github.io/panel/"> بررسی وضیعت درخواست </a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© ۲۰۲۴ Visa Immigration (VIM). تمامی حقوق محفوظ است.</span>
-      <span>تعهد | شفافیت | همراهی تا پایان مسیر مهاجرت</span>
-    </div>
-  </div>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="logo.png" alt="VIM Logo" class="footer-logo" />
+          <div>
+            <div class="footer-name">Visa Immigration</div>
+            <div class="footer-slogan">تعهد | شفافیت | همراهی</div>
+          </div>
+        </div>
+        <p class="footer-desc">شرکت VIM با سال‌ها تجربه در زمینه مهاجرت، شما را در تمام مراحل دریافت ویزای درمانی، تحصیلی، کاری و بشردوستانه همراهی می‌کند. شفافیت و صداقت، اساس کار ماست.</p>
+        <div class="footer-social">
+          <a class="social-link" href="https://wa.me/0093780412583" aria-label="WhatsApp" title="WhatsApp">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.89-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a class="social-link" href="tel:0093780412583" aria-label="Phone" title="Phone">
+            <svg viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+          </a>
+          <a class="social-link" href="mailto:immigration.tehran@tuta.io" aria-label="Email" title="Email">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+          <a class="social-link" href="https://instagram.com/visa_immigration2026" aria-label="Instagram" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">اطلاعات تماس</div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.27.36-.66.25-1.01C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg></span>
+          <a href="tel:0093780412583">0093780412583</a>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
+          <a href="mailto:immigration.tehran@tuta.io">immigration.tehran@tuta.io</a>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></span>
+          <span>گلبهار سنتر، منزل تحتانی، دفتر شماره ۷۰۶</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">دسترسی سریع</div>
+        <div class="footer-links">
+          <a class="footer-link-btn primary" href="https://tally.so/r/0Qzrp0"> تشکیل پرونده بین المللی</a>
+          <a class="footer-link-btn secondary" href="https://vimvisa.github.io/panel/"> بررسی وضیعت درخواست </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© ۲۰۲۴ Visa Immigration (VIM). تمامی حقوق محفوظ است.</span>
+      <span>تعهد | شفافیت | همراهی تا پایان مسیر مهاجرت</span>
+    </div>
+  </div>
 </footer>
 
 <script>
+// ===== Loading Screen =====
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    document.getElementById('loaderScreen').classList.add('hidden');
+  }, 1800);
+});
+
+// ===== Header Slideshow Images =====
+var slideshowImages = [
+  'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+  'https://images.pexels.com/photos/37120347/pexels-photo-37120347.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+  'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+  'https://images.pexels.com/photos/38498918/pexels-photo-38498918.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop',
+  'https://images.pexels.com/photos/12167747/pexels-photo-12167747.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop'
+];
+
+var slideshowEl = document.getElementById('headerSlideshow');
+var dotsEl = document.getElementById('headerDots');
+var currentSlide = 0;
+
+slideshowImages.forEach(function(src, i) {
+  var slide = document.createElement('div');
+  slide.className = 'header-slide' + (i === 0 ? ' active' : '');
+  slide.style.backgroundImage = 'url(' + src + ')';
+  slideshowEl.appendChild(slide);
+
+  var dot = document.createElement('div');
+  dot.className = 'header-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', function() { goToSlide(i); });
+  dotsEl.appendChild(dot);
+});
+
+var slides = slideshowEl.querySelectorAll('.header-slide');
+var dots = dotsEl.querySelectorAll('.header-dot');
+
+function goToSlide(index) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = index;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+
+setInterval(function() {
+  var next = (currentSlide + 1) % slideshowImages.length;
+  goToSlide(next);
+}, 4500);
+
+// ===== Package Data =====
+var packages = [
+  {
+    id: 1, active: true,
+    title: 'پکیج ۱: ویزای درمانی ترکیه (فوری و تضمینی)',
+    country: 'ترکیه', flag: '🇹🇷',
+    badge: { text: 'تضمینی', class: 'badge-gold' },
+    image: 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'ویزای درمانی ترکیه برای بیماران نیازمند درمان فوری، با تضمین پذیرش و سرعت بالا در انجام مراحل.',
+    applyUrl: 'https://tally.so/r/Y5Xgaz',
+    sections: [
+      { title: 'هزینه‌ها', type: 'price', items: [
+        { label: 'هزینه بیماران فوری', value: '۸,۸۰۰ دلار' },
+        { label: 'هزینه بیماران عادی', value: '۱۳,۵۰۰ دلار' }
+      ]},
+      { title: 'مدت زمان', type: 'text', content: 'ویزای فوری: ۳ تا ۷ روز کاری\nویزای عادی: ۱۰ تا ۱۵ روز کاری' },
+      { title: 'مدارک مورد نیاز', type: 'list', items: [
+        'اصل پاسپورت با حداقل ۶ ماه اعتبار','عکس پرسنلی جدید (۶ قطعه)',
+        'گواهی پزشکی و گزارش بیماری از پزشک معتبر','دعوت‌نامه از بیمارستان یا کلینیک ترکیه',
+        'ترجمه مدارک پزشکی به زبان ترکی','بیمه مسافرتی معتبر','تضامین بانکی مورد نظر سفارت'
+      ]},
+      { title: 'خدمات ما', type: 'list', items: [
+        'تنظیم و ترجمه مدارک پزشکی','ارتباط با بیمارستان‌های معتبر ترکیه',
+        'رزرو نوبت و برنامه‌ریزی سفر','همراهی کامل در تمام مراحل','پذیرش تضمینی یا بازگشت وجه'
+      ]},
+      { title: 'شرایط', type: 'list', items: [
+        'بیمار باید دارای گزارش پزشکی معتبر باشد','توانایی پرداخت هزینه‌های درمان','عدم وجود منع قانونی از ورود به ترکیه'
+      ]}
+    ]
+  },
+  {
+    id: 2, active: true,
+    title: 'پکیج ۲: بورسیه تحصیلی آلمان (ویژه بانوان افغانستان)',
+    country: 'آلمان', flag: '🇩🇪',
+    badge: { text: 'بانوان', class: 'badge-emerald' },
+    image: 'https://images.pexels.com/photos/37120347/pexels-photo-37120347.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'بورسیه تحصیلی کامل ویژه بانوان افغان برای ادامه تحصیل در دانشگاه‌های آلمان، با پشتیبانی کامل.',
+    applyUrl: 'https://tally.so/r/aQ120B',
+    sections: [
+      { title: 'مخاطبین', type: 'text', content: 'این بورسیه به طور خاص برای بانوان افغان که دارای مدرک تحصیلی دیپلم یا لیسانس هستند و قصد ادامه تحصیل در مقطع فوق لیسانس یا دکتری در آلمان را دارند.' },
+      { title: 'مزایا', type: 'list', items: [
+        'تخفیف کامل یا بخشی از شهریه دانشگاه','ماهیانه کمک‌هزینه تحصیلی','پشتیبانی در یافتن مسکن دانشجویی',
+        'پذیرش بدون نیاز به مدرک زبان آلمانی در ابتدا','دوره‌های زبان آلمانی رایگان'
+      ]},
+      { title: 'رشته‌های تحصیلی', type: 'list', items: [
+        'مهندسی (کامپیوتر، مکانیک، برق)','علوم پزشکی و بهداشت','علوم اجتماعی و حقوق','مدیریت و اقتصاد','علوم پایه و تربیت معلم'
+      ]},
+      { title: 'خدمات ما', type: 'list', items: [
+        'مشاوره در انتخاب رشته و دانشگاه','آماده‌سازی و ترجمه مدارک تحصیلی',
+        'درخواست پذیرش از دانشگاه‌های آلمان','درخواست بورسیه و کمک‌هزینه',
+        'همراهی در مراحل ویزای تحصیلی','پشتیبانی پس از ورود به آلمان'
+      ]},
+      { title: 'مدارک مورد نیاز', type: 'list', items: [
+        'مدرک تحصیلی دیپلم یا لیسانس با ترجمه رسمی','مدرک زبان (در صورت وجود)',
+        'توصیه‌نامه از اساتید','انگیزه‌نامه (Motivation Letter)','کارت شناسایی و عکس پرسنلی'
+      ]}
+    ]
+  },
+  {
+    id: 3, active: true,
+    title: 'پکیج ۳: تشکیل پرونده و پیگیری ویزای کاری/تحصیلی آلمان',
+    country: 'آلمان', flag: '🇩🇪',
+    badge: { text: 'کاری/تحصیلی', class: 'badge-blue' },
+    image: 'https://images.pexels.com/photos/32848467/pexels-photo-32848467.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'تشکیل کامل پرونده و پیگیری حرفه‌ای برای ویزای کاری یا تحصیلی آلمان، با تعرفه‌های شفاف و مشخص.',
+    applyUrl: 'https://tally.so/r/A7NaVk',
+    sections: [
+      { title: 'تعرفه‌های خدمات', type: 'price', items: [
+        { label: 'مشاوره اولیه', value: '۱۵۰ افغانی' },
+        { label: 'تشکیل پرونده کامل', value: '۷,۰۰۰ افغانی' },
+        { label: 'پیگیری کامل تا دریافت ویزا', value: '۱۰,۰۰۰ افغانی' }
+      ]},
+      { title: 'خدمات شامل', type: 'list', items: [
+        'بررسی شرایط متقاضی و انتخاب مسیر مناسب','آماده‌سازی و ترجمه تمام مدارک',
+        'ثبت درخواست در سیستم سفارت','پیگیری وضعیت درخواست',
+        'هماهنگی با کارفرمایان یا دانشگاه‌های آلمان','آماده‌سازی برای مصاحبه سفارت'
+      ]},
+      { title: 'مدارک مورد نیاز', type: 'list', items: [
+        'اصل پاسپورت با حداقل ۶ ماه اعتبار','عکس پرسنلی جدید','مدرک تحصیلی (ترجمه رسمی)',
+        'سوابق کاری و گواهی‌های مرتبط','مدرک زبان آلمانی (B1 یا بالاتر)',
+        'قرارداد کار یا پذیرش دانشگاه','بیمه سلامت و تمکن مالی'
+      ]},
+      { title: 'شرایط', type: 'list', items: [
+        'حداقل ۱۸ سال سن','مدرک تحصیلی حداقل دیپلم یا معادل',
+        'سابقه کار مرتبط برای ویزای کاری','پذیرش دانشگاهی برای ویزای تحصیلی'
+      ]}
+    ]
+  },
+  {
+    id: 4, active: true,
+    title: 'پکیج ۴: ارزیابی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP)',
+    country: 'استرالیا', flag: '🇦🇺',
+    badge: { text: 'بشردوستانه', class: 'badge-emerald' },
+    image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'ارزیابی تخصصی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP) با مرحله اول کاملاً رایگان.',
+    applyUrl: 'https://tally.so/r/81g5ro',
+    sections: [
+      { title: 'هزینه‌ها', type: 'price', items: [
+        { label: 'مرحله اول (ارزیابی)', value: 'رایگان', free: true },
+        { label: 'در صورت پذیرش', value: '۲۵۰ دلار' }
+      ]},
+      { title: 'درباره ویزا', type: 'text', content: 'ویزای بشردوستانه استرالیا شامل دو مسیر اصلی است: ویزای پناهندگی (Refugee Visa) و برنامه حمایت ویژه (SHP - Special Humanitarian Programme). این ویزا برای افرادی که در کشور خود با خطر جدی مواجه هستند ارائه می‌شود.' },
+      { title: 'مراحل اقدام', type: 'list', items: [
+        'ارزیابی اولیه رایگان شرایط متقاضی','جمع‌آوری مدارک و شواهد مربوطه',
+        'تدوین و تنظیم درخواست رسمی','ثبت درخواست در سازمان‌های مرتبط','پیگیری وضعیت درخواست تا نتیجه نهایی'
+      ]},
+      { title: 'مدارک مورد نیاز', type: 'list', items: [
+        'کارت شناسایی و پاسپورت','مدارک و شواهد نشان‌دهنده خطر یا آزار',
+        'گزارش‌های پزشکی در صورت وجود','توصیه‌نامه از سازمان‌های حقوق بشری','مدارک تحصیلی و کاری'
+      ]},
+      { title: 'خدمات ما', type: 'list', items: [
+        'ارزیابی تخصصی رایگان شرایط شما','مشاوره در انتخاب مسیر مناسب (Refugee یا SHP)',
+        'تنظیم و ترجمه مدارک','تدوین داستان پرونده به صورت حرفه‌ای','پیگیری کامل تا دریافت نتیجه'
+      ]}
+    ]
+  },
+ {
+    id: 5, active: true,
+    title: 'پکیج ۵: عنوان پکیج اینجا',
+    country: 'کانادا', flag: '🇨🇦',
+    badge: { text: 'ویژه', class: 'badge-blue' },
+    image: 'https://images.pexels.com/photos/12167747/pexels-photo-12167747.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'خلاصه توضیحات پکیج پنجم در اینجا قرار می‌گیرد.',
+    applyUrl: 'https://tally.so/r/your-link',
+    sections: [
+      { title: 'خدمات ما', type: 'list', items: [
+        'خدمت اول', 'خدمت دوم'
+      ]}
+    ]
+  }
+]
+  <script>
 // ===== Loading Screen =====
 window.addEventListener('load', function() {
   setTimeout(function() {
@@ -449,7 +629,6 @@ var packages = [
     badge: { text: 'تضمینی', class: 'badge-gold' },
     image: 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'ویزای درمانی ترکیه برای بیماران نیازمند درمان فوری، با تضمین پذیرش و سرعت بالا در انجام مراحل.',
-    applyUrl: 'https://tally.so/r/Y5Xgaz',
     sections: [
       { title: 'هزینه‌ها', type: 'price', items: [
         { label: 'هزینه بیماران فوری', value: '۸,۸۰۰ دلار' },
@@ -477,7 +656,6 @@ var packages = [
     badge: { text: 'بانوان', class: 'badge-emerald' },
     image: 'https://images.pexels.com/photos/37120347/pexels-photo-37120347.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'بورسیه تحصیلی کامل ویژه بانوان افغان برای ادامه تحصیل در دانشگاه‌های آلمان، با پشتیبانی کامل.',
-    applyUrl: 'https://tally.so/r/aQ120B',
     sections: [
       { title: 'مخاطبین', type: 'text', content: 'این بورسیه به طور خاص برای بانوان افغان که دارای مدرک تحصیلی دیپلم یا لیسانس هستند و قصد ادامه تحصیل در مقطع فوق لیسانس یا دکتری در آلمان را دارند.' },
       { title: 'مزایا', type: 'list', items: [
@@ -505,7 +683,6 @@ var packages = [
     badge: { text: 'کاری/تحصیلی', class: 'badge-blue' },
     image: 'https://images.pexels.com/photos/32848467/pexels-photo-32848467.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'تشکیل کامل پرونده و پیگیری حرفه‌ای برای ویزای کاری یا تحصیلی آلمان، با تعرفه‌های شفاف و مشخص.',
-    applyUrl: 'https://tally.so/r/A7NaVk',
     sections: [
       { title: 'تعرفه‌های خدمات', type: 'price', items: [
         { label: 'مشاوره اولیه', value: '۱۵۰ افغانی' },
@@ -535,7 +712,6 @@ var packages = [
     badge: { text: 'بشردوستانه', class: 'badge-emerald' },
     image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
     summary: 'ارزیابی تخصصی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP) با مرحله اول کاملاً رایگان.',
-    applyUrl: 'https://tally.so/r/81g5ro',
     sections: [
       { title: 'هزینه‌ها', type: 'price', items: [
         { label: 'مرحله اول (ارزیابی)', value: 'رایگان', free: true },
@@ -558,161 +734,134 @@ var packages = [
   },
   {
     id: 5, active: true,
-    title: 'پکیج ۵: ویزای بشردوستانه کانادا',
-    country: 'کانادا', flag: '🇨🇦',
-    badge: { text: 'بشردوستانه', class: 'badge-emerald' },
-    image: 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'اقدام و پیگیری ویزای بشردوستانه کانادا برای افراد واجد شرایط و در خطر.',
-    applyUrl: 'https://tally.so/r/Gxayjo',
-    sections: [
-      { title: 'خدمات ما', type: 'text', content: 'مشاوره و ثبت‌نام کامل پرونده‌های بشردوستانه کانادا.' }
-    ]
-  },
-  {
-    id: 6, active: true,
-    title: 'پکیج ۶: ویزای بشردوستانه فرانسه',
-    country: 'فرانسه', flag: '🇫🇷',
-    badge: { text: 'بشردوستانه', class: 'badge-emerald' },
-    image: 'https://images.pexels.com/photos/37120347/pexels-photo-37120347.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'بررسی و پیگیری ویزای بشردوستانه فرانسه با همراهی کامل مشاورین.',
-    applyUrl: 'https://tally.so/r/RG1lVj',
-    sections: [
-      { title: 'خدمات ما', type: 'text', content: 'مشاوره، آماده‌سازی و ارسال مدارک پرونده‌های فرانسه.' }
-    ]
-  },
-  {
-    id: 7, active: true,
-    title: 'پکیج ۷: ویزای کاری یک‌ساله ایران',
+    title: 'پکیج ۵: ویزای کاری یک‌ساله ایران',
     country: 'ایران', flag: '🇮🇷',
     badge: { text: 'کاری', class: 'badge-blue' },
-    image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'اخذ ویزای کاری یک‌ساله ایران با مراحل قانونی و سریع.',
-    applyUrl: 'https://tally.so/r/0QzjrA',
+    image: 'https://images.pexels.com/photos/38498918/pexels-photo-38498918.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
+    summary: 'ویزای کاری یک‌ساله برای ایران با فرآیند ساده و هزینه مناسب، مناسب برای متخصصان و کارگران.',
     sections: [
-      { title: 'خدمات ما', type: 'text', content: 'تنظیم مدارک و اخذ ویزای کار معتبر ایران.' }
-    ]
-  },
-
-{
-    id: 4, active: true,
-    title: 'پکیج ۴: ارزیابی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP)',
-    country: 'استرالیا', flag: '🇦🇺',
-    badge: { text: 'بشردوستانه', class: 'badge-emerald' },
-    image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
-    summary: 'ارزیابی تخصصی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP) با مرحله اول کاملاً رایگان.',
-    applyUrl: 'https://tally.so/r/81g5ro',
-    sections: [
-      { title: 'هزینه‌ها', type: 'price', items: [
-        { label: 'مرحله اول (ارزیابی)', value: 'رایگان', free: true },
-        { label: 'در صورت پذیرش', value: '۲۵۰ دلار' }
+      { title: 'هزینه', type: 'price', items: [
+        { label: 'هزینه کل پکیج', value: '۶۰۰ دلار' }
       ]},
-      { title: 'درباره ویزا', type: 'text', content: 'ویزای بشردوستانه استرالیا شامل دو مسیر اصلی است: ویزای پناهندگی (Refugee Visa) و برنامه حمایت ویژه (SHP - Special Humanitarian Programme). این ویزا برای افرادی که در کشور خود با خطر جدی مواجه هستند ارائه می‌شود.' },
-      { title: 'مراحل اقدام', type: 'list', items: [
-        'ارزیابی اولیه رایگان شرایط متقاضی','جمع‌آوری مدارک و شواهد مربوطه',
-        'تدوین و تنظیم درخواست رسمی','ثبت درخواست در سازمان‌های مرتبط','پیگیری وضعیت درخواست تا نتیجه نهایی'
-      ]},
+      { title: 'مدت زمان', type: 'text', content: 'مدت اعتبار ویزا: ۱ سال\nمدت زمان صدور: ۱۵ تا ۳۰ روز کاری\nقابلیت تمدید: بله' },
       { title: 'مدارک مورد نیاز', type: 'list', items: [
-        'کارت شناسایی و پاسپورت','مدارک و شواهد نشان‌دهنده خطر یا آزار',
-        'گزارش‌های پزشکی در صورت وجود','توصیه‌نامه از سازمان‌های حقوق بشری','مدارک تحصیلی و کاری'
+        'اصل پاسپورت با حداقل ۶ ماه اعتبار','عکس پرسنلی جدید (۴ قطعه)',
+        'قرارداد کار از کارفرمای ایرانی','گواهی سوابق کاری','مدرک تحصیلی یا تخصص','گواهی پزشکی معتبر'
       ]},
       { title: 'خدمات ما', type: 'list', items: [
-        'ارزیابی تخصصی رایگان شرایط شما','مشاوره در انتخاب مسیر مناسب (Refugee یا SHP)',
-        'تنظیم و ترجمه مدارک','تدوین داستان پرونده به صورت حرفه‌ای','پیگیری کامل تا دریافت نتیجه'
+        'اخذ دعوت‌نامه و قرارداد کار از کارفرما','تنظیم و ترجمه مدارک',
+        'ثبت درخواست در اداره مهاجرت ایران','پیگیری تا صدور ویزا','مشاوره در زمینه اقامت و کار در ایران'
+      ]},
+      { title: 'شرایط', type: 'list', items: [
+        'حداقل ۱۸ سال سن','دارای تخصص یا مهارت کاری',
+        'قرارداد کار معتبر از کارفرمای ایرانی','عدم دارای منع قانونی از ورود به ایران'
       ]}
     ]
+  },
+  // ===== Inactive Worldwide Packages =====
+  { id: 101, active: false, title: 'ویزای تحصیلی کانادا', country: 'کانادا', flag: '🇨🇦', summary: 'برنامه‌های تحصیلی دانشگاه‌ها و کالج‌های کانادا.' },
+  { id: 102, active: false, title: 'ویزای کاری انگلیس', country: 'انگلیس', flag: '🇬🇧', summary: 'ویزای کار متخصصان برای بریتانیا.' },
+  { id: 103, active: false, title: 'ویزای سرمایه‌گذاری دبی', country: 'امارات', flag: '🇦🇪', summary: 'اقامت از طریق سرمایه‌گذاری در امارات.' },
+  { id: 104, active: false, title: 'ویزای تحصیلی آمریکا', country: 'آمریکا', flag: '🇺🇸', summary: 'درخواست ویزای تحصیلی دانشگاه‌های آمریکا.' },
+  { id: 105, active: false, title: 'ویزای کار ایتالیا', country: 'ایتالیا', flag: '🇮🇹', summary: 'فرصت‌های کاری و اقامت در ایتالیا.' },
+  { id: 106, active: false, title: 'ویزای تحصیلی فرانسه', country: 'فرانسه', flag: '🇫🇷', summary: 'بورسیه‌ها و پذیرش دانشگاه‌های فرانسه.' },
+  { id: 107, active: false, title: 'ویزای کاری سوئد', country: 'سوئد', flag: '🇸🇪', summary: 'ویزای کار برای متخصصان در سوئد.' },
+  { id: 108, active: false, title: 'ویزای سرمایه‌گذاری مالزی', country: 'مالزی', flag: '🇲🇾', summary: 'برنامه‌های اقامتی و سرمایه‌گذاری مالزی.' }
+];
 
-var gridEl = document.getElementById('packagesGrid');
-var modalOverlay = document.getElementById('modalOverlay');
-var modal = document.getElementById('modal');
-var modalClose = document.getElementById('modalClose');
-var modalImage = document.getElementById('modalImage');
-var modalTitle = document.getElementById('modalTitle');
-var modalBody = document.getElementById('modalBody');
+// ===== Render Cards =====
+var grid = document.getElementById('packagesGrid');
 
 packages.forEach(function(pkg) {
   var card = document.createElement('div');
   card.className = 'card' + (pkg.active ? '' : ' inactive');
 
-  var imageHtml = '<div class="card-image-wrap">' +
-    '<img class="card-image" src="' + pkg.image + '" alt="' + pkg.title + '" />' +
-    '<div class="card-image-overlay"></div>' +
-    '<span class="card-badge ' + pkg.badge.class + '">' + pkg.badge.text + '</span>' +
-    '<div class="card-caption">' +
-      '<div class="card-country"><span class="card-flag">' + pkg.flag + '</span>' + pkg.country + '</div>' +
-      '<div class="card-title">' + pkg.title + '</div>' +
-    '</div>' +
-  '</div>';
-
-  var bodyHtml = '<div class="card-body">' +
-    '<div class="card-summary">' + pkg.summary + '</div>' +
-    (pkg.active ? 
-      '<div style="display:flex; gap:0.5rem; flex-direction:column;">' +
-        '<button class="card-btn" data-id="' + pkg.id + '">مشاهده جزئیات <span class="card-btn-arrow">←</span></button>' +
-        '<a class="card-btn" style="text-decoration:none; background:linear-gradient(135deg, var(--gold-400), var(--gold-500)); color:var(--navy-950);" href="' + pkg.applyUrl + '">ثبت درخواست</a>' +
-      '</div>'
-      : '<div class="card-btn-disabled">به زودی...</div>') +
-  '</div>';
-
-  card.innerHTML = imageHtml + bodyHtml;
-  gridEl.appendChild(card);
+  if (pkg.active) {
+    card.innerHTML =
+      '<div class="card-image-wrap">' +
+        '<img class="card-image" src="' + pkg.image + '" alt="' + pkg.country + '" loading="lazy" />' +
+        '<div class="card-image-overlay"></div>' +
+        '<div class="card-badge ' + pkg.badge.class + '">' + pkg.badge.text + '</div>' +
+        '<div class="card-caption">' +
+          '<div class="card-country"><span class="card-flag">' + pkg.flag + '</span> ' + pkg.country + '</div>' +
+          '<div class="card-title">' + pkg.title + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<p class="card-summary">' + pkg.summary + '</p>' +
+        '<button class="card-btn" onclick="openModal(' + pkg.id + ')">' +
+          'برای مطالعه معلومات کامل اینجا کلیک کنید' +
+          '<span class="card-btn-arrow">←</span>' +
+        '</button>' +
+      '</div>';
+  } else {
+    card.innerHTML =
+      '<div class="card-image-wrap">' +
+        '<div class="card-image-overlay"></div>' +
+        '<div class="card-badge badge-inactive">به زودی</div>' +
+        '<div class="card-caption">' +
+          '<div class="card-country"><span class="card-flag">' + pkg.flag + '</span> ' + pkg.country + '</div>' +
+          '<div class="card-title">' + pkg.title + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<p class="card-summary">' + pkg.summary + '</p>' +
+        '<div class="card-btn-disabled">غیرفعال — به زودی</div>' +
+      '</div>';
+  }
+  grid.appendChild(card);
 });
 
-gridEl.addEventListener('click', function(e) {
-  var btn = e.target.closest('.card-btn');
-  if (!btn || !btn.dataset.id) return;
-  var pkgId = parseInt(btn.dataset.id, 10);
-  var pkg = packages.find(function(p) { return p.id === pkgId; });
-  if (!pkg) return;
+// ===== Modal Logic =====
+var overlay = document.getElementById('modalOverlay');
+var modalImage = document.getElementById('modalImage');
+var modalTitle = document.getElementById('modalTitle');
+var modalBody = document.getElementById('modalBody');
+var modalClose = document.getElementById('modalClose');
+
+function openModal(id) {
+  var pkg = packages.find(function(p) { return p.id === id; });
+  if (!pkg || !pkg.active) return;
 
   modalImage.src = pkg.image;
-  modalImage.alt = pkg.title;
+  modalImage.alt = pkg.country;
   modalTitle.textContent = pkg.title;
 
-  var bodyContent = '';
-  pkg.sections.forEach(function(sec) {
-    bodyContent += '<section>';
-    bodyContent += '<div class="modal-section-title">' + sec.title + '</div>';
-    bodyContent += '<div class="modal-section-content">';
-    if (sec.type === 'text') {
-      bodyContent += sec.content.replace(/\n/g, '<br>');
-    } else if (sec.type === 'price') {
-      bodyContent += '<div class="price-box">';
-      sec.items.forEach(function(item) {
-        bodyContent += '<div class="price-tag">' +
-          '<div class="price-tag-label">' + item.label + '</div>' +
-          '<div class="price-tag-value' + (item.free ? ' free' : '') + '">' + item.value + '</div>' +
-        '</div>';
+  var bodyHtml = '';
+  pkg.sections.forEach(function(section) {
+    bodyHtml += '<section><div class="modal-section-title">' + section.title + '</div><div class="modal-section-content">';
+    if (section.type === 'price') {
+      bodyHtml += '<div class="price-box">';
+      section.items.forEach(function(item) {
+        bodyHtml += '<div class="price-tag"><div class="price-tag-label">' + item.label + '</div><div class="price-tag-value' + (item.free ? ' free' : '') + '">' + item.value + '</div></div>';
       });
-      bodyContent += '</div>';
-    } else if (sec.type === 'list') {
-      bodyContent += '<ul>';
-      sec.items.forEach(function(li) {
-        bodyContent += '<li>' + li + '</li>';
-      });
-      bodyContent += '</ul>';
+      bodyHtml += '</div>';
+    } else if (section.type === 'list') {
+      bodyHtml += '<ul>';
+      section.items.forEach(function(item) { bodyHtml += '<li>' + item + '</li>'; });
+      bodyHtml += '</ul>';
+    } else if (section.type === 'text') {
+      bodyHtml += section.content.split('\n').map(function(line) { return '<p style="margin-bottom:0.5rem">' + line + '</p>'; }).join('');
     }
-    bodyContent += '</div></section>';
+    bodyHtml += '</div></section>';
   });
+  modalBody.innerHTML = bodyHtml;
 
-  bodyContent += '<div style="margin-top: 1.5rem;"><a class="card-btn" style="text-decoration:none; background:linear-gradient(135deg, var(--gold-400), var(--gold-500)); color:var(--navy-950);" href="' + pkg.applyUrl + '">ثبت درخواست این پکیج</a></div>';
-
-  modalBody.innerHTML = bodyContent;
-  modalOverlay.classList.add('active');
+  overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
-});
+}
 
 function closeModal() {
-  modalOverlay.classList.remove('active');
+  overlay.classList.remove('active');
   document.body.style.overflow = '';
 }
 
 modalClose.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', function(e) {
-  if (e.target === modalOverlay) closeModal();
-});
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
-});
+overlay.addEventListener('click', function(e) { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 </script>
+
 </body>
 </html>
+
+  
