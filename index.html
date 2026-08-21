@@ -669,5 +669,141 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
 </script>
+  <!-- ===== Chatbot Styles ===== -->
+<style>
+  .vim-chat-widget {
+    position: fixed; bottom: 20px; left: 20px; z-index: 9998;
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+  }
+  .vim-chat-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(10,22,40,0.25); transition: transform 0.3s ease;
+  }
+  .vim-chat-btn:hover { transform: scale(1.08); }
+  .vim-chat-btn svg { width: 28px; height: 28px; fill: var(--navy-950); }
+  
+  .vim-chat-box {
+    position: absolute; bottom: 75px; left: 0; width: 340px; height: 440px;
+    background: var(--white); border-radius: 18px; border: 1px solid var(--slate-200);
+    box-shadow: 0 12px 40px rgba(10,22,40,0.2); display: flex; flex-direction: column;
+    overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .vim-chat-box.active { opacity: 1; visibility: visible; transform: translateY(0); }
+  
+  .vim-chat-header {
+    background: var(--navy-950); color: var(--white); padding: 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .vim-chat-title { font-size: 0.9rem; font-weight: 700; color: var(--gold-400); }
+  .vim-chat-close { background: none; border: none; color: var(--slate-400); font-size: 1.1rem; cursor: pointer; }
+  
+  .vim-chat-messages {
+    flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;
+    background: var(--slate-50);
+  }
+  .vim-msg { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.82rem; line-height: 1.5; }
+  .vim-msg.bot { background: var(--white); color: var(--navy-950); border: 1px solid var(--slate-200); align-self: flex-start; }
+  .vim-msg.user { background: var(--navy-800); color: var(--white); align-self: flex-end; }
+  
+  .vim-chat-input-area {
+    padding: 0.75rem; background: var(--white); border-top: 1px solid var(--slate-200);
+    display: flex; gap: 0.5rem;
+  }
+  .vim-chat-input {
+    flex: 1; padding: 0.6rem 0.9rem; border: 1px solid var(--slate-200); border-radius: 10px;
+    font-family: inherit; font-size: 0.82rem; outline: none;
+  }
+  .vim-chat-input:focus { border-color: var(--gold-400); }
+  .vim-chat-send {
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); border: none;
+    padding: 0 1rem; border-radius: 10px; font-family: inherit; font-weight: 700; font-size: 0.8rem;
+    color: var(--navy-950); cursor: pointer;
+  }
+</style>
+
+<!-- ===== Chatbot HTML Structure ===== -->
+<div class="vim-chat-widget">
+  <div class="vim-chat-box" id="vimChatBox">
+    <div class="vim-chat-header">
+      <span class="vim-chat-title">پشتیبان آنلاین VIM</span>
+      <button class="vim-chat-close" id="vimChatClose">✕</button>
+    </div>
+    <div class="vim-chat-messages" id="vimChatMessages"></div>
+    <div class="vim-chat-input-area">
+      <input type="text" class="vim-chat-input" id="vimChatInput" placeholder="سوال خود را بنویسید..." />
+      <button class="vim-chat-send" id="vimChatSend">ارسال</button>
+    </div>
+  </div>
+  <button class="vim-chat-btn" id="vimChatBtn" aria-label="چت با پشتیبان">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+  </button>
+</div>
+
+<!-- ===== Chatbot Script ===== -->
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwvbJJX-QBuazetbrHOuTMWMyE2DaWUJrv8P7Wk7MPPKEApzRt4v-Ilfl21dSCggKeT/exec"; // لینک وب اپلیکیشن گوگل اسکریپت را اینجا قرار دهید
+
+  const chatBox = document.getElementById('vimChatBox');
+  const chatBtn = document.getElementById('vimChatBtn');
+  const chatClose = document.getElementById('vimChatClose');
+  const chatMessages = document.getElementById('vimChatMessages');
+  const chatInput = document.getElementById('vimChatInput');
+  const chatSend = document.getElementById('vimChatSend');
+
+  // باز شدن خودکار پنجره چت و پیام خوش‌آمدگویی هنگام ورود به سایت
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      chatBox.classList.add('active');
+      appendMessage("سلام! به موسسه مهاجرتی VIM خوش آمدید. چطور می‌توانم کمکتان کنم؟", "bot");
+    }, 1500);
+  });
+
+  chatBtn.addEventListener('click', () => chatBox.classList.toggle('active'));
+  chatClose.addEventListener('click', () => chatBox.classList.remove('active'));
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'vim-msg ' + sender;
+    msgDiv.textContent = text;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  async function handleUserMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    appendMessage(text, "user");
+    chatInput.value = "";
+
+    // پیام موقت در حال پردازش
+    const loadingId = "loading_" + Date.now();
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'vim-msg bot';
+    loadingDiv.id = loadingId;
+    loadingDiv.textContent = "در حال جستجوی پاسخ...";
+    chatMessages.appendChild(loadingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const response = await fetch(SCRIPT_URL + "?q=" + encodeURIComponent(text));
+      const data = await response.json();
+      
+      document.getElementById(loadingId).remove();
+      appendMessage(data.answer, "bot");
+    } catch (error) {
+      document.getElementById(loadingId).remove();
+      appendMessage("خطایی در ارتباط با سرور رخ داد. لطفاً دوباره تلاش کنید.", "bot");
+    }
+  }
+
+  chatSend.addEventListener('click', handleUserMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleUserMessage();
+  });
+</script>
 </body>
 </html>
