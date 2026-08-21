@@ -724,6 +724,79 @@ document.addEventListener('keydown', function(e) {
   }
 </style>
 
+<!-- ===== Chatbot Styles ===== -->
+<style>
+  .vim-chat-widget {
+    position: fixed; bottom: 20px; left: 20px; z-index: 9998;
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+  }
+  .vim-chat-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(10,22,40,0.25); transition: transform 0.3s ease;
+  }
+  .vim-chat-btn:hover { transform: scale(1.08); }
+  .vim-chat-btn svg { width: 28px; height: 28px; fill: var(--navy-950); }
+  
+  .vim-chat-box {
+    position: absolute; bottom: 75px; left: 0; width: 340px; height: 460px;
+    background: var(--white); border-radius: 18px; border: 1px solid var(--slate-200);
+    box-shadow: 0 12px 40px rgba(10,22,40,0.2); display: flex; flex-direction: column;
+    overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .vim-chat-box.active { opacity: 1; visibility: visible; transform: translateY(0); }
+  
+  .vim-chat-header {
+    background: var(--navy-950); color: var(--white); padding: 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .vim-chat-title { font-size: 0.9rem; font-weight: 700; color: var(--gold-400); }
+  .vim-chat-close { background: none; border: none; color: var(--slate-400); font-size: 1.1rem; cursor: pointer; }
+  
+  .vim-chat-messages {
+    flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;
+    background: var(--slate-50);
+  }
+  .vim-msg { max-width: 85%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.82rem; line-height: 1.6; }
+  .vim-msg.bot { background: var(--white); color: var(--navy-950); border: 1px solid var(--slate-200); align-self: flex-start; }
+  .vim-msg.user { background: var(--navy-800); color: var(--white); align-self: flex-end; }
+
+  /* Style for clickable questions prompt */
+  .vim-question-chips {
+    display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem;
+  }
+  .vim-chip {
+    background: rgba(226,181,103,0.15); border: 1px solid var(--gold-400); color: var(--navy-950);
+    padding: 0.45rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; text-align: right; transition: all 0.2s ease;
+  }
+  .vim-chip:hover { background: var(--gold-400); color: var(--navy-950); }
+  
+  .vim-chat-input-area {
+    padding: 0.75rem; background: var(--white); border-top: 1px solid var(--slate-200);
+    display: flex; gap: 0.5rem;
+  }
+  .vim-chat-input {
+    flex: 1; padding: 0.6rem 0.9rem; border: 1px solid var(--slate-200); border-radius: 10px;
+    font-family: inherit; font-size: 0.82rem; outline: none;
+  }
+  .vim-chat-input:focus { border-color: var(--gold-400); }
+  .vim-chat-send {
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); border: none;
+    padding: 0 1rem; border-radius: 10px; font-family: inherit; font-weight: 700; font-size: 0.8rem;
+    color: var(--navy-950); cursor: pointer;
+  }
+
+  /* Mobile Responsive adjustments */
+  @media (max-width: 480px) {
+    .vim-chat-box {
+      width: calc(100vw - 30px); height: 420px; bottom: 70px; left: 15px; right: 15px;
+    }
+  }
+</style>
+
 <!-- ===== Chatbot HTML Structure ===== -->
 <div class="vim-chat-widget">
   <div class="vim-chat-box" id="vimChatBox">
@@ -733,7 +806,7 @@ document.addEventListener('keydown', function(e) {
     </div>
     <div class="vim-chat-messages" id="vimChatMessages"></div>
     <div class="vim-chat-input-area">
-      <input type="text" class="vim-chat-input" id="vimChatInput" placeholder="سوال خود را بنویسید..." />
+      <input type="text" class="vim-chat-input" id="vimChatInput" placeholder="نام کشور یا سوال خود را بنویسید..." />
       <button class="vim-chat-send" id="vimChatSend">ارسال</button>
     </div>
   </div>
@@ -744,7 +817,7 @@ document.addEventListener('keydown', function(e) {
 
 <!-- ===== Chatbot Script ===== -->
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwvbJJX-QBuazetbrHOuTMWMyE2DaWUJrv8P7Wk7MPPKEApzRt4v-Ilfl21dSCggKeT/exec"; // لینک وب اپلیکیشن گوگل اسکریپت را اینجا قرار دهید
+  const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; // لینک وب اپلیکیشن گوگل اسکریپت را اینجا جایگزین کنید
 
   const chatBox = document.getElementById('vimChatBox');
   const chatBtn = document.getElementById('vimChatBtn');
@@ -753,24 +826,87 @@ document.addEventListener('keydown', function(e) {
   const chatInput = document.getElementById('vimChatInput');
   const chatSend = document.getElementById('vimChatSend');
 
-  // باز شدن خودکار پنجره چت و پیام خوش‌آمدگویی هنگام ورود به سایت
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      chatBox.classList.add('active');
-      appendMessage("سلام! به موسسه مهاجرتی VIM خوش آمدید. چطور می‌توانم کمکتان کنم؟", "bot");
-    }, 1500);
-  });
+  let allQuestions = [];
+  let currentQuestionIndex = 0;
+  let rotationInterval = null;
 
-  chatBtn.addEventListener('click', () => chatBox.classList.toggle('active'));
+  // باز کردن و بستن پنجره چت (در حالت عادی کاملاً بسته است)
+  chatBtn.addEventListener('click', () => {
+    chatBox.classList.toggle('active');
+    if (chatBox.classList.contains('active') && chatMessages.children.length === 0) {
+      initChatBot();
+    }
+  });
   chatClose.addEventListener('click', () => chatBox.classList.remove('active'));
 
-  function appendMessage(text, sender) {
+  function appendMessage(text, sender, isHtml = false) {
     const msgDiv = document.createElement('div');
     msgDiv.className = 'vim-msg ' + sender;
-    msgDiv.textContent = text;
+    if (isHtml) {
+      msgDiv.innerHTML = text;
+    } else {
+      msgDiv.textContent = text;
+    }
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
+
+  async function initChatBot() {
+    // پیام خوش‌آمدگویی رسمی جدید
+    const welcomeText = `با سلام و احترام؛<br><br>` +
+                        `تیم پشتیبانی مؤسسه مهاجرتی VIM به صورت تمام‌وقت آماده خدمت‌رسانی به شما مراجعین محترم می‌باشد.<br><br>` +
+                        `لطفاً جهت دریافت اطلاعات پیرامون ویزای بشردوستانه، صرفاً نام کشور مورد نظر خود (به عنوان مثال: آلمان) را در بخش چت یادداشت فرمایید. سیستم هوشمند این مؤسسه، راهنمایی‌ها و اطلاعات لازم را جهت مطالعه و آگاهی شما ارسال خواهد کرد.<br><br>` +
+                        `خاطرنشان می‌سازد؛ در صورتی که سیستم هوشمند قادر به پاسخگویی به پرسش شما نباشد، می‌توانید درخواست خود را از طریق شماره واتساپ با ما در میان بگذارید.`;
+    
+    appendMessage(welcomeText, "bot", true);
+
+    // دریافت سوالات از گوگل‌شیت
+    try {
+      const response = await fetch(SCRIPT_URL + "?action=get_questions");
+      const data = await response.json();
+      if (data.questions && data.questions.length > 0) {
+        allQuestions = data.questions;
+        startQuestionRotation();
+      }
+    } catch (e) {
+      console.error("خطا در دریافت سوالات از شیت");
+    }
+  }
+
+  // نمایش چرخشی ۵ سوال هر ۳۰ ثانیه
+  function startQuestionRotation() {
+    showBatchQuestions();
+    rotationInterval = setInterval(() => {
+      showBatchQuestions();
+    }, 30000);
+  }
+
+  function showBatchQuestions() {
+    if (allQuestions.length === 0) return;
+
+    let batch = [];
+    for (let i = 0; i < 5; i++) {
+      if (currentQuestionIndex >= allQuestions.length) {
+        currentQuestionIndex = 0; // تکرار دوباره روند از ابتدا پس از اتمام سوالات
+      }
+      batch.push(allQuestions[currentQuestionIndex]);
+      currentQuestionIndex++;
+    }
+
+    let htmlContent = "پرسش‌های پیشنهادی (برای مشاهده پاسخ روی هر کدام کلیک کنید):<div class=\"vim-question-chips\">";
+    batch.forEach(q => {
+      htmlContent += `<div class="vim-chip" onclick="selectQuestion('${q.replace(/'/g, "\\'")}')">${q}</div>`;
+    });
+    htmlContent += "</div>";
+
+    appendMessage(htmlContent, "bot", true);
+  }
+
+  // هنگامی که کاربر روی یکی از سوالات پیشنهادی کلیک می‌کند
+  window.selectQuestion = function(questionText) {
+    chatInput.value = questionText;
+    handleUserMessage();
+  };
 
   async function handleUserMessage() {
     const text = chatInput.value.trim();
@@ -779,12 +915,11 @@ document.addEventListener('keydown', function(e) {
     appendMessage(text, "user");
     chatInput.value = "";
 
-    // پیام موقت در حال پردازش
     const loadingId = "loading_" + Date.now();
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'vim-msg bot';
     loadingDiv.id = loadingId;
-    loadingDiv.textContent = "در حال جستجوی پاسخ...";
+    loadingDiv.textContent = "در حال پردازش و استعلام از سیستم...";
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
