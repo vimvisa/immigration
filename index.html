@@ -224,7 +224,6 @@
   .price-tag-value { font-size: 1.15rem; font-weight: 800; color: var(--navy-800); }
   .price-tag-value.free { color: var(--emerald-500); }
   
-  /* Iframe Modal Wrapper for Forms */
   .form-modal-content { padding: 0 !important; height: 550px; background: #fff; }
   .form-modal-content iframe { width: 100%; height: 100%; border: none; }
 
@@ -234,38 +233,44 @@
     .form-modal-content { height: calc(100vh - 140px); }
   }
 
-  /* ===== Chatbot Widget Styles ===== */
+  /* ===== Independent Floating WhatsApp Icon ===== */
+  .floating-whatsapp {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9998;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    animation: waPulseBtn 2.5s infinite;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+  }
+  .floating-whatsapp:hover { transform: scale(1.1); }
+  .floating-whatsapp svg { width: 34px; height: 34px; fill: #ffffff; }
+
+  @keyframes waPulseBtn {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+    70% { box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
+  /* ===== Standard Chatbot Widget Styles ===== */
   .vim-chat-widget {
     position: fixed; bottom: 20px; left: 20px; z-index: 9998;
     font-family: 'Vazirmatn', system-ui, sans-serif;
   }
   
-  /* Animated Beautiful WhatsApp-style Floating Button */
   .vim-chat-btn {
-    width: 65px; height: 65px; border-radius: 50%;
-    background: linear-gradient(135deg, #25d366, #128c7e);
-    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-    animation: chatPulseBtn 2.5s infinite;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy-900), var(--navy-950));
+    border: 2px solid var(--gold-400); cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 25px rgba(10,22,40,0.3);
     transition: transform 0.3s ease;
   }
   .vim-chat-btn:hover { transform: scale(1.1); }
-  .vim-chat-btn svg { width: 34px; height: 34px; fill: #ffffff; }
-
-  @keyframes chatPulseBtn {
-    0% {
-      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
-    }
-    70% {
-      box-shadow: 0 0 0 18px rgba(37, 211, 102, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-    }
-  }
+  .vim-chat-btn svg { width: 28px; height: 28px; fill: var(--gold-400); }
   
   .vim-chat-box {
-    position: absolute; bottom: 80px; left: 0; width: 380px; height: 520px;
+    position: absolute; bottom: 75px; left: 0; width: 380px; height: 520px;
     background: var(--white); border-radius: 20px; border: 1px solid var(--slate-200);
     box-shadow: 0 16px 48px rgba(10,22,40,0.25); display: flex; flex-direction: column;
     overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.95);
@@ -278,7 +283,7 @@
     display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
   }
   .vim-chat-title { font-size: 0.95rem; font-weight: 700; color: var(--gold-400); display: flex; align-items: center; gap: 0.5rem; }
-  .vim-chat-title::before { content: ''; width: 8px; height: 8px; background: #25d366; border-radius: 50%; box-shadow: 0 0 8px #25d366; }
+  .vim-chat-title::before { content: ''; width: 8px; height: 8px; background: var(--emerald-500); border-radius: 50%; box-shadow: 0 0 8px var(--emerald-500); }
   .vim-chat-close { background: none; border: none; color: var(--slate-300); font-size: 1.3rem; cursor: pointer; padding: 0 5px; transition: color 0.2s; }
   .vim-chat-close:hover { color: #ef4444; }
   
@@ -287,7 +292,6 @@
     background: var(--slate-50);
   }
   
-  /* Text Justification for Both Mobile & Desktop in Chatbot Bot Responses */
   .vim-msg { 
     max-width: 90%; 
     padding: 0.75rem 1rem; 
@@ -311,7 +315,7 @@
     text-align: right; 
   }
 
-  /* Question Grid View with Smooth Animations */
+  /* Question Grid View */
   .vim-question-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -348,6 +352,38 @@
     box-shadow: 0 6px 16px rgba(226,181,103,0.3);
   }
   
+  /* Animated WhatsApp Action Button inside Chatbot */
+  .chat-whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.65rem 1.2rem;
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: var(--white);
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    animation: chatWaPulse 2s infinite;
+    transition: transform 0.3s ease;
+  }
+  .chat-whatsapp-btn:hover {
+    transform: scale(1.04);
+  }
+  .chat-whatsapp-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+  @keyframes chatWaPulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+    70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
   .vim-chat-input-area {
     padding: 0.85rem; background: var(--white); border-top: 1px solid var(--slate-200);
     display: flex; gap: 0.5rem; flex-shrink: 0;
@@ -365,8 +401,10 @@
   .vim-chat-send:hover { transform: scale(1.04); }
 
   @media (max-width: 480px) {
-    .vim-chat-widget { bottom: 15px; left: 15px; right: 15px; }
-    .vim-chat-box { width: 100%; height: 460px; bottom: 75px; left: 0; right: 0; }
+    .vim-chat-widget { bottom: 15px; left: 15px; }
+    .floating-whatsapp { bottom: 15px; right: 15px; width: 52px; height: 52px; }
+    .floating-whatsapp svg { width: 28px; height: 28px; }
+    .vim-chat-box { width: calc(100vw - 30px); height: 440px; bottom: 70px; left: 0; }
   }
 
   /* ===== Footer ===== */
@@ -461,7 +499,12 @@
   </div>
 </div>
 
-<!-- ===== Chatbot Widget ===== -->
+<!-- ===== Independent Floating WhatsApp Icon on Page ===== -->
+<a href="https://wa.me/0093780412583" target="_blank" class="floating-whatsapp" aria-label="ارتباط در واتساپ" title="ارتباط در واتساپ">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.89-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ===== Chatbot Widget with Standard Chat Bot Icon ===== -->
 <div class="vim-chat-widget">
   <div class="vim-chat-box" id="vimChatBox">
     <div class="vim-chat-header">
@@ -475,7 +518,7 @@
     </div>
   </div>
   <button class="vim-chat-btn" id="vimChatBtn" aria-label="چت با پشتیبان">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.89-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
   </button>
 </div>
 
@@ -723,7 +766,6 @@ function openModal(id) {
   modalOverlay.classList.add('active');
 }
 
-// Function to open external forms inside the same page via inline modal iframe without opening a new tab
 function openFormModal(url, titleText) {
   modalHeaderWrap.style.display = 'block';
   modalImage.src = 'https://images.pexels.com/photos/16254744/pexels-photo-16254744.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop';
@@ -817,21 +859,25 @@ async function handleUserMessage() {
     
     document.getElementById(loadingId).remove();
     
-    // Check if the answer is empty or indicating no response, redirect to WhatsApp
+    // If answer is empty or not found, display message with optional animated WhatsApp button
     if (!data.answer || data.answer.trim() === "" || data.answer.includes("یافت نشد")) {
-      appendMessage("پاسخی برای این سوال یافت نشد. لطفاً از طریق شماره واتساپ 0093780412583 با ما در ارتباط باشید.", "bot");
-      setTimeout(() => {
-        window.open("https://wa.me/0093780412583?text=" + encodeURIComponent(text), "_blank");
-      }, 1200);
+      const notFoundHtml = `پاسخی برای این سوال یافت نشد. لطفاً از طریق شماره واتساپ 0093780412583 با ما در ارتباط باشید.<br>
+      <a href="https://wa.me/0093780412583?text=${encodeURIComponent(text)}" target="_blank" class="chat-whatsapp-btn">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.89-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        ارتباط با واتساپ
+      </a>`;
+      appendMessage(notFoundHtml, "bot", true);
     } else {
       appendMessage(data.answer, "bot");
     }
   } catch (error) {
     document.getElementById(loadingId).remove();
-    appendMessage("خطا در ارتباط با سرور رخ داد. لطفاً از طریق شماره واتساپ 0093780412583 با ما در تماس باشید.", "bot");
-    setTimeout(() => {
-      window.open("https://wa.me/0093780412583", "_blank");
-    }, 1200);
+    const errorHtml = `خطا در ارتباط با سرور رخ داد. لطفاً از طریق شماره واتساپ 0093780412583 با ما در تماس باشید.<br>
+    <a href="https://wa.me/0093780412583" target="_blank" class="chat-whatsapp-btn">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.89-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      ارتباط با واتساپ
+    </a>`;
+    appendMessage(errorHtml, "bot", true);
   }
 }
 
