@@ -228,7 +228,7 @@
     .modal-body { padding: 1.25rem; } .modal-overlay { padding: 0; } .modal { border-radius: 0; min-height: 100vh; }
   }
 
-  /* ===== Chatbot Widget Styles (Fully Fixed & Mobile Optimized) ===== */
+  /* ===== Chatbot Widget Styles ===== */
   .vim-chat-widget {
     position: fixed; bottom: 20px; left: 20px; z-index: 9998;
     font-family: 'Vazirmatn', system-ui, sans-serif;
@@ -268,11 +268,11 @@
 
   /* Clickable questions list */
   .vim-question-chips {
-    display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.6rem; max-height: 180px; overflow-y: auto; padding-left: 4px;
+    display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.2rem; width: 100%;
   }
   .vim-chip {
     background: rgba(226,181,103,0.15); border: 1px solid var(--gold-400); color: var(--navy-950);
-    padding: 0.45rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600;
+    padding: 0.55rem 0.85rem; border-radius: 10px; font-size: 0.8rem; font-weight: 600;
     cursor: pointer; text-align: right; transition: all 0.2s ease;
   }
   .vim-chip:hover { background: var(--gold-400); color: var(--navy-950); }
@@ -389,7 +389,7 @@
   </div>
 </div>
 
-<!-- ===== Chatbot Widget (Mobile Optimized & All Column A Questions) ===== -->
+<!-- ===== Chatbot Widget ===== -->
 <div class="vim-chat-widget">
   <div class="vim-chat-box" id="vimChatBox">
     <div class="vim-chat-header">
@@ -651,8 +651,8 @@ function openModal(id) {
 modalClose.addEventListener('click', function() { modalOverlay.classList.remove('active'); });
 modalOverlay.addEventListener('click', function(e) { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
 
-// ===== Chatbot Widget Script (No Timer, All Column A Questions) =====
-const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; // لینک وب اپلیکیشن گوگل اسکریپت خود را اینجا جایگزین کنید
+// ===== Chatbot Widget Script =====
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwvbJJX-QBuazetbrHOuTMWMyE2DaWUJrv8P7Wk7MPPKEApzRt4v-Ilfl21dSCggKeT/exec";
 
 const chatBox = document.getElementById('vimChatBox');
 const chatBtn = document.getElementById('vimChatBtn');
@@ -685,13 +685,6 @@ function appendMessage(text, sender, isHtml = false) {
 }
 
 async function initChatBot() {
-  const welcomeText = `با سلام و احترام؛<br><br>` +
-                      `تیم پشتیبانی مؤسسه مهاجرتی VIM به صورت تمام‌وقت آماده خدمت‌رسانی به شما مراجعین محترم می‌باشد.<br><br>` +
-                      `لطفاً جهت دریافت اطلاعات پیرامون ویزای بشردوستانه، صرفاً نام کشور مورد نظر خود (به عنوان مثال: آلمان) را در بخش چت یادداشت فرمایید. سیستم هوشمند این مؤسسه، راهنمایی‌ها و اطلاعات لازم را جهت مطالعه و آگاهی شما ارسال خواهد کرد.<br><br>` +
-                      `خاطرنشان می‌سازد؛ در صورتی که سیستم هوشمند قادر به پاسخگویی به پرسش شما نباشد، می‌توانید درخواست خود را از طریق شماره واتساپ با ما در میان بگذارید.`;
-  
-  appendMessage(welcomeText, "bot", true);
-
   try {
     const response = await fetch(SCRIPT_URL + "?action=get_questions");
     const data = await response.json();
@@ -699,12 +692,12 @@ async function initChatBot() {
       showAllQuestions(data.questions);
     }
   } catch (e) {
-    console.error("خطا در دریافت سوالات از شیت");
+    appendMessage("خطا در برقراری ارتباط با سرور", "bot");
   }
 }
 
 function showAllQuestions(questions) {
-  let htmlContent = "لیست پرسش‌های موجود (برای مشاهده پاسخ روی سوال مورد نظر کلیک کنید):<div class=\"vim-question-chips\">";
+  let htmlContent = "<div class=\"vim-question-chips\">";
   questions.forEach(q => {
     htmlContent += `<div class="vim-chip" onclick="selectQuestion('${q.replace(/'/g, "\\'")}')">${q}</div>`;
   });
@@ -729,7 +722,7 @@ async function handleUserMessage() {
   const loadingDiv = document.createElement('div');
   loadingDiv.className = 'vim-msg bot';
   loadingDiv.id = loadingId;
-  loadingDiv.textContent = "در حال پردازش و استعلام از سیستم...";
+  loadingDiv.textContent = "در حال پردازش...";
   chatMessages.appendChild(loadingDiv);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -741,7 +734,7 @@ async function handleUserMessage() {
     appendMessage(data.answer, "bot");
   } catch (error) {
     document.getElementById(loadingId).remove();
-    appendMessage("خطایی در ارتباط با سرور رخ داد. لطفاً دوباره تلاش کنید.", "bot");
+    appendMessage("خطا در ارتباط با سرور رخ داد. لطفاً دوباره تلاش کنید.", "bot");
   }
 }
 
