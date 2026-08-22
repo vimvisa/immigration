@@ -153,19 +153,12 @@
   .card:nth-child(2) { animation-delay: 0.1s; }
   .card:nth-child(3) { animation-delay: 0.15s; }
   .card:nth-child(4) { animation-delay: 0.2s; }
-  .card:nth-child(5) { animation-delay: 0.25s; }
-  .card:nth-child(6) { animation-delay: 0.3s; }
-  .card:nth-child(7) { animation-delay: 0.35s; }
-  .card:nth-child(8) { animation-delay: 0.4s; }
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   .card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(10,22,40,0.15); }
-  .card.inactive { filter: grayscale(0.7) opacity(0.65); }
-  .card.inactive:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(10,22,40,0.1); }
-
+  
   .card-image-wrap { position: relative; width: 100%; aspect-ratio: 1200 / 630; overflow: hidden; background: var(--slate-100); }
   .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
   .card:hover .card-image { transform: scale(1.05); }
-  .card-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,22,40,0.78) 0%, transparent 55%); }
   .card-badge {
     position: absolute; top: 1rem; right: 1rem; padding: 0.3rem 0.9rem; border-radius: 999px;
     font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(8px);
@@ -173,15 +166,10 @@
   .badge-gold { background: rgba(226,181,103,0.9); color: var(--navy-950); }
   .badge-emerald { background: rgba(16,185,129,0.9); color: white; }
   .badge-blue { background: rgba(30,74,122,0.9); color: white; }
-  .badge-inactive { background: rgba(100,116,139,0.92); color: white; }
-  .card-caption { position: absolute; bottom: 0; right: 0; left: 0; padding: 1.25rem 1.5rem; }
-  .card-country { font-size: 0.8rem; color: var(--gold-400); font-weight: 600; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
-  .card-flag { font-size: 1.1rem; line-height: 1; }
-  .card-title { font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.4; }
   .card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .card-country { font-size: 0.8rem; color: var(--gold-500); font-weight: 600; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem; }
+  .card-title { font-size: 1.1rem; font-weight: 700; color: var(--navy-950); line-height: 1.4; margin-bottom: 0.75rem; }
   .card-summary { font-size: 0.875rem; color: var(--slate-600); margin-bottom: 1.25rem; flex: 1; }
-  
-  /* Buttons Wrapper inside card */
   .card-actions { display: flex; gap: 0.75rem; }
   .card-btn {
     flex: 1; padding: 0.8rem 1rem; border-radius: 12px; border: none;
@@ -189,18 +177,10 @@
     transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
     text-decoration: none; text-align: center;
   }
-  .card-btn-details {
-    background: var(--slate-100); color: var(--navy-800); border: 1px solid var(--slate-200);
-  }
-  .card-btn-details:hover {
-    background: var(--slate-200); transform: translateY(-2px);
-  }
-  .card-btn-apply {
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950);
-  }
-  .card-btn-apply:hover {
-    transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.3);
-  }
+  .card-btn-details { background: var(--slate-100); color: var(--navy-800); border: 1px solid var(--slate-200); }
+  .card-btn-details:hover { background: var(--slate-200); transform: translateY(-2px); }
+  .card-btn-apply { background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950); }
+  .card-btn-apply:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(226,181,103,0.3); }
 
   /* ===== Modal ===== */
   .modal-overlay {
@@ -246,6 +226,75 @@
   @media (max-width: 640px) {
     .modal-header { height: 140px; } .modal-header-content { padding: 1.25rem; } .modal-header-content h3 { font-size: 1.05rem; }
     .modal-body { padding: 1.25rem; } .modal-overlay { padding: 0; } .modal { border-radius: 0; min-height: 100vh; }
+  }
+
+  /* ===== Chatbot Widget Styles (Fully Fixed & Mobile Optimized) ===== */
+  .vim-chat-widget {
+    position: fixed; bottom: 20px; left: 20px; z-index: 9998;
+    font-family: 'Vazirmatn', system-ui, sans-serif;
+  }
+  .vim-chat-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(10,22,40,0.25); transition: transform 0.3s ease;
+  }
+  .vim-chat-btn:hover { transform: scale(1.08); }
+  .vim-chat-btn svg { width: 28px; height: 28px; fill: var(--navy-950); }
+  
+  .vim-chat-box {
+    position: absolute; bottom: 75px; left: 0; width: 360px; height: 480px;
+    background: var(--white); border-radius: 18px; border: 1px solid var(--slate-200);
+    box-shadow: 0 12px 40px rgba(10,22,40,0.2); display: flex; flex-direction: column;
+    overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .vim-chat-box.active { opacity: 1; visibility: visible; transform: translateY(0); }
+  
+  .vim-chat-header {
+    background: var(--navy-950); color: var(--white); padding: 1rem;
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+  }
+  .vim-chat-title { font-size: 0.9rem; font-weight: 700; color: var(--gold-400); }
+  .vim-chat-close { background: none; border: none; color: var(--slate-400); font-size: 1.2rem; cursor: pointer; padding: 0 5px; }
+  
+  .vim-chat-messages {
+    flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;
+    background: var(--slate-50);
+  }
+  .vim-msg { max-width: 88%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.82rem; line-height: 1.6; word-break: break-word; }
+  .vim-msg.bot { background: var(--white); color: var(--navy-950); border: 1px solid var(--slate-200); align-self: flex-start; }
+  .vim-msg.user { background: var(--navy-800); color: var(--white); align-self: flex-end; }
+
+  /* Clickable questions list */
+  .vim-question-chips {
+    display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.6rem; max-height: 180px; overflow-y: auto; padding-left: 4px;
+  }
+  .vim-chip {
+    background: rgba(226,181,103,0.15); border: 1px solid var(--gold-400); color: var(--navy-950);
+    padding: 0.45rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; text-align: right; transition: all 0.2s ease;
+  }
+  .vim-chip:hover { background: var(--gold-400); color: var(--navy-950); }
+  
+  .vim-chat-input-area {
+    padding: 0.75rem; background: var(--white); border-top: 1px solid var(--slate-200);
+    display: flex; gap: 0.5rem; flex-shrink: 0;
+  }
+  .vim-chat-input {
+    flex: 1; padding: 0.6rem 0.9rem; border: 1px solid var(--slate-200); border-radius: 10px;
+    font-family: inherit; font-size: 0.82rem; outline: none; min-width: 0;
+  }
+  .vim-chat-input:focus { border-color: var(--gold-400); }
+  .vim-chat-send {
+    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); border: none;
+    padding: 0 1rem; border-radius: 10px; font-family: inherit; font-weight: 700; font-size: 0.8rem;
+    color: var(--navy-950); cursor: pointer; white-space: nowrap;
+  }
+
+  @media (max-width: 480px) {
+    .vim-chat-widget { bottom: 15px; left: 15px; right: 15px; }
+    .vim-chat-box { width: 100%; height: 440px; bottom: 70px; left: 0; right: 0; }
   }
 
   /* ===== Footer ===== */
@@ -340,6 +389,24 @@
   </div>
 </div>
 
+<!-- ===== Chatbot Widget (Mobile Optimized & All Column A Questions) ===== -->
+<div class="vim-chat-widget">
+  <div class="vim-chat-box" id="vimChatBox">
+    <div class="vim-chat-header">
+      <span class="vim-chat-title">پشتیبان آنلاین VIM</span>
+      <button class="vim-chat-close" id="vimChatClose">✕</button>
+    </div>
+    <div class="vim-chat-messages" id="vimChatMessages"></div>
+    <div class="vim-chat-input-area">
+      <input type="text" class="vim-chat-input" id="vimChatInput" placeholder="نام کشور یا سوال خود را بنویسید..." />
+      <button class="vim-chat-send" id="vimChatSend">ارسال</button>
+    </div>
+  </div>
+  <button class="vim-chat-btn" id="vimChatBtn" aria-label="چت با پشتیبان">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+  </button>
+</div>
+
 <!-- ===== Footer ===== -->
 <footer class="footer">
   <div class="footer-inner">
@@ -386,8 +453,8 @@
       <div>
         <div class="footer-col-title">دسترسی سریع</div>
         <div class="footer-links">
-          <a class="footer-link-btn primary" href="https://tally.so/r/0Qzrp0">   تشکیل پرونده بین المللی</a>
-          <a class="footer-link-btn secondary" href="https://vimvisa.github.io/panel/"> بررسی وضیعت درخواست </a>
+          <a class="footer-link-btn primary" href="https://tally.so/r/0Qzrp0">تشکیل پرونده بین المللی</a>
+          <a class="footer-link-btn secondary" href="https://vimvisa.github.io/panel/">بررسی وضیعت درخواست</a>
         </div>
       </div>
     </div>
@@ -447,7 +514,7 @@ setInterval(function() {
   goToSlide(next);
 }, 4500);
 
-// ===== Package Data =====
+// ===== Package Data & Rendering =====
 var packages = [
   {
     id: 1, active: true,
@@ -471,9 +538,6 @@ var packages = [
       { title: 'خدمات ما', type: 'list', items: [
         'تنظیم و ترجمه مدارک پزشکی','ارتباط با بیمارستان‌های معتبر ترکیه',
         'رزرو نوبت و برنامه‌ریزی سفر','همراهی کامل در تمام مراحل','پذیرش تضمینی یا بازگشت وجه'
-      ]},
-      { title: 'شرایط', type: 'list', items: [
-        'بیمار باید دارای گزارش پزشکی معتبر باشد','توانایی پرداخت هزینه‌های درمان','عدم وجود منع قانونی از ورود به ترکیه'
       ]}
     ]
   },
@@ -490,18 +554,6 @@ var packages = [
       { title: 'مزایا', type: 'list', items: [
         'تخفیف کامل یا بخشی از شهریه دانشگاه','ماهیانه کمک‌هزینه تحصیلی','پشتیبانی در یافتن مسکن دانشجویی',
         'پذیرش بدون نیاز به مدرک زبان آلمانی در ابتدا','دوره‌های زبان آلمانی رایگان'
-      ]},
-      { title: 'رشته‌های تحصیلی', type: 'list', items: [
-        'مهندسی (کامپیوتر، مکانیک، برق)','علوم پزشکی و بهداشت','علوم اجتماعی و حقوق','مدیریت و اقتصاد','علوم پایه و تربیت معلم'
-      ]},
-      { title: 'خدمات ما', type: 'list', items: [
-        'مشاوره در انتخاب رشته و دانشگاه','آماده‌سازی و ترجمه مدارک تحصیلی',
-        'درخواست پذیرش از دانشگاه‌های آلمان','درخواست بورسیه و کمک‌هزینه',
-        'همراهی در مراحل ویزای تحصیلی','پشتیبانی پس از ورود به آلمان'
-      ]},
-      { title: 'مدارک مورد نیاز', type: 'list', items: [
-        'مدرک تحصیلی دیپلم یا لیسانس با ترجمه رسمی','مدرک زبان (در صورت وجود)',
-        'توصیه‌نامه از اساتید','انگیزه‌نامه (Motivation Letter)','کارت شناسایی و عکس پرسنلی'
       ]}
     ]
   },
@@ -518,26 +570,12 @@ var packages = [
         { label: 'مشاوره اولیه', value: '۱۵۰ افغانی' },
         { label: 'تشکیل پرونده کامل', value: '۷,۰۰۰ افغانی' },
         { label: 'پیگیری کامل تا دریافت ویزا', value: '۱۰,۰۰۰ افغانی' }
-      ]},
-      { title: 'خدمات شامل', type: 'list', items: [
-        'بررسی شرایط متقاضی و انتخاب مسیر مناسب','آماده‌سازی و ترجمه تمام مدارک',
-        'ثبت درخواست در سیستم سفارت','پیگیری وضعیت درخواست',
-        'هماهنگی با کارفرمایان یا دانشگاه‌های آلمان','آماده‌سازی برای مصاحبه سفارت'
-      ]},
-      { title: 'مدارک مورد نیاز', type: 'list', items: [
-        'اصل پاسپورت با حداقل ۶ ماه اعتبار','عکس پرسنلی جدید','مدرک تحصیلی (ترجمه رسمی)',
-        'سوابق کاری و گواهی‌های مرتبط','مدرک زبان آلمانی (B1 یا بالاتر)',
-        'قرارداد کار یا پذیرش دانشگاه','بیمه سلامت و تمکن مالی'
-      ]},
-      { title: 'شرایط', type: 'list', items: [
-        'حداقل ۱۸ سال سن','مدرک تحصیلی حداقل دیپلم یا معادل',
-        'سابقه کار مرتبط برای ویزای کاری','پذیرش دانشگاهی برای ویزای تحصیلی'
       ]}
     ]
   },
   {
     id: 4, active: true,
-    title: 'پکیج ۴: ارزیابی و اقدام برای ویزای بشردوستانه استرالیا (Refugee & SHP)',
+    title: 'پکیج ۴: ارزیابی و اقدام برای ویزای بشردوستانه استرالیا',
     country: 'استرالیا', flag: '🇦🇺',
     badge: { text: 'بشردوستانه', class: 'badge-emerald' },
     image: 'https://images.pexels.com/photos/783681/pexels-photo-783681.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop',
@@ -547,398 +585,170 @@ var packages = [
       { title: 'هزینه‌ها', type: 'price', items: [
         { label: 'مرحله اول (ارزیابی)', value: 'رایگان', free: true },
         { label: 'در صورت پذیرش', value: '۲۵۰ دلار' }
-      ]},
-      { title: 'درباره ویزا', type: 'text', content: 'ویزای بشردوستانه استرالیا شامل دو مسیر اصلی است: ویزای پناهندگی (Refugee Visa) و برنامه حمایت ویژه (SHP - Special Humanitarian Programme). این ویزا برای افرادی که در کشور خود با خطر جدی مواجه هستند ارائه می‌شود.' },
-      { title: 'مراحل اقدام', type: 'list', items: [
-        'ارزیابی اولیه رایگان شرایط متقاضی','جمع‌آوری مدارک و شواهد مربوطه',
-        'تدوین و تنظیم درخواست رسمی','ثبت درخواست در سازمان‌های مرتبط','پیگیری وضعیت درخواست تا نتیجه نهایی'
-      ]},
-      { title: 'مدارک مورد نیاز', type: 'list', items: [
-        'کارت شناسایی و پاسپورت','مدارک و شواهد نشان‌دهنده خطر یا آزار',
-        'گزارش‌های پزشکی در صورت وجود','توصیه‌نامه از سازمان‌های حقوق بشری','مدارک تحصیلی و کاری'
-      ]},
-      { title: 'خدمات ما', type: 'list', items: [
-        'ارزیابی تخصصی رایگان شرایط شما','مشاوره در انتخاب مسیر مناسب (Refugee یا SHP)',
-        'تنظیم و ترجمه مدارک','تدوین داستان پرونده به صورت حرفه‌ای','پیگیری کامل تا دریافت نتیجه'
       ]}
     ]
   }
 ];
 
-// ===== Render Packages Grid =====
 var gridEl = document.getElementById('packagesGrid');
-
 packages.forEach(function(pkg) {
   var card = document.createElement('div');
-  card.className = 'card' + (!pkg.active ? ' inactive' : '');
-
-  var badgeClass = pkg.badge.class;
-  if (!pkg.active) badgeClass = 'badge-inactive';
-  var badgeText = !pkg.active ? 'غیرفعال' : pkg.badge.text;
-
-  card.innerHTML = 
-    '<div class="card-image-wrap">' +
-      '<img class="card-image" src="' + pkg.image + '" alt="' + pkg.title + '" loading="lazy" />' +
-      '<div class="card-image-overlay"></div>' +
-      '<span class="card-badge ' + badgeClass + '">' + badgeText + '</span>' +
-      '<div class="card-caption">' +
-        '<div class="card-country"><span class="card-flag">' + pkg.flag + '</span>' + pkg.country + '</div>' +
-        '<h3 class="card-title">' + pkg.title + '</h3>' +
-      '</div>' +
-    '</div>' +
-    '<div class="card-body">' +
-      '<p class="card-summary">' + pkg.summary + '</p>' +
-      '<div class="card-actions">' +
-        '<button class="card-btn card-btn-details" data-id="' + pkg.id + '">توضیحات بیشتر</button>' +
-        (pkg.active 
-          ? '<a class="card-btn card-btn-apply" href="' + pkg.applyUrl + '">ثبت نام</a>' 
-          : '<span class="card-btn" style="background:var(--slate-200); color:var(--slate-400); cursor:not-allowed;">تکمیل ظرفیت</span>') +
-      '</div>' +
-    '</div>';
-
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-image-wrap">
+      <img src="${pkg.image}" alt="${pkg.title}" class="card-image" loading="lazy" />
+      <span class="card-badge ${pkg.badge.class}">${pkg.badge.text}</span>
+    </div>
+    <div class="card-body">
+      <div class="card-country"><span class="card-flag">${pkg.flag}</span> ${pkg.country}</div>
+      <h3 class="card-title">${pkg.title}</h3>
+      <p class="card-summary">${pkg.summary}</p>
+      <div class="card-actions">
+        <button class="card-btn card-btn-details" onclick="openModal(${pkg.id})">جزئیات پکیج</button>
+        <a href="${pkg.applyUrl}" class="card-btn card-btn-apply" target="_blank">ثبت‌نام</a>
+      </div>
+    </div>
+  `;
   gridEl.appendChild(card);
 });
 
-// ===== Modal Handling =====
+// ===== Modal Logic =====
 var modalOverlay = document.getElementById('modalOverlay');
 var modalClose = document.getElementById('modalClose');
 var modalImage = document.getElementById('modalImage');
 var modalTitle = document.getElementById('modalTitle');
 var modalBody = document.getElementById('modalBody');
 
-// Open Modal on Details Button Click
-document.querySelectorAll('.card-btn-details').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var id = parseInt(this.getAttribute('data-id'));
-    var pkg = packages.find(function(p) { return p.id === id; });
-    if (!pkg) return;
-
-    modalImage.src = pkg.image;
-    modalImage.alt = pkg.title;
-    modalTitle.textContent = pkg.title;
-
-    var bodyHtml = '';
-    pkg.sections.forEach(function(sec) {
-      bodyHtml += '<section>';
-      bodyHtml += '<div class="modal-section-title">' + sec.title + '</div>';
-      bodyHtml += '<div class="modal-section-content">';
-
-      if (sec.type === 'price') {
-        bodyHtml += '<div class="price-box">';
-        sec.items.forEach(function(item) {
-          var valClass = item.free ? ' price-tag-value free' : ' price-tag-value';
-          bodyHtml += '<div class="price-tag"><div class="price-tag-label">' + item.label + '</div><div class="' + valClass + '">' + item.value + '</div></div>';
-        });
-        bodyHtml += '</div>';
-      } else if (sec.type === 'text') {
-        bodyHtml += '<p style="white-space: pre-line;">' + sec.content + '</p>';
-      } else if (sec.type === 'list') {
-        bodyHtml += '<ul>';
-        sec.items.forEach(function(li) {
-          bodyHtml += '<li>' + li + '</li>';
-        });
-        bodyHtml += '</ul>';
-      }
-
-      bodyHtml += '</div></section>';
-    });
-
-    // Add apply button inside modal body as well for convenience
-    if (pkg.active) {
-      bodyHtml += '<div style="margin-top: 1.5rem; text-align: center;">';
-      bodyHtml += '<a href="' + pkg.applyUrl + '" style="display: inline-block; width: 100%; padding: 0.9rem; background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); color: var(--navy-950); font-weight: 700; border-radius: 12px; text-decoration: none; text-align: center;">تکمیل فرم ثبت‌نام این پکیج</a>';
-      bodyHtml += '</div>';
+function openModal(id) {
+  var pkg = packages.find(function(p) { return p.id === id; });
+  if (!pkg) return;
+  modalImage.src = pkg.image;
+  modalTitle.textContent = pkg.title;
+  
+  var html = '';
+  pkg.sections.forEach(function(sec) {
+    html += '<section>';
+    html += '<div class="modal-section-title">' + sec.title + '</div>';
+    if (sec.type === 'text') {
+      html += '<div class="modal-section-content" style="white-space: pre-line;">' + sec.content + '</div>';
+    } else if (sec.type === 'list') {
+      html += '<div class="modal-section-content"><ul>';
+      sec.items.forEach(function(item) { html += '<li>' + item + '</li>'; });
+      html += '</ul></div>';
+    } else if (sec.type === 'price') {
+      html += '<div class="price-box">';
+      sec.items.forEach(function(p) {
+        html += '<div class="price-tag"><div class="price-tag-label">' + p.label + '</div><div class="price-tag-value ' + (p.free ? 'free' : '') + '">' + p.value + '</div></div>';
+      });
+      html += '</div>';
     }
-
-    modalBody.innerHTML = bodyHtml;
-    modalOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    html += '</section>';
   });
-});
-
-function closeModal() {
-  modalOverlay.classList.remove('active');
-  document.body.style.overflow = '';
+  modalBody.innerHTML = html;
+  modalOverlay.classList.add('active');
 }
 
-modalClose.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', function(e) {
-  if (e.target === modalOverlay) closeModal();
+modalClose.addEventListener('click', function() { modalOverlay.classList.remove('active'); });
+modalOverlay.addEventListener('click', function(e) { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); });
+
+// ===== Chatbot Widget Script (No Timer, All Column A Questions) =====
+const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; // لینک وب اپلیکیشن گوگل اسکریپت خود را اینجا جایگزین کنید
+
+const chatBox = document.getElementById('vimChatBox');
+const chatBtn = document.getElementById('vimChatBtn');
+const chatClose = document.getElementById('vimChatClose');
+const chatMessages = document.getElementById('vimChatMessages');
+const chatInput = document.getElementById('vimChatInput');
+const chatSend = document.getElementById('vimChatSend');
+
+let isChatInitialized = false;
+
+chatBtn.addEventListener('click', () => {
+  chatBox.classList.toggle('active');
+  if (chatBox.classList.contains('active') && !isChatInitialized) {
+    isChatInitialized = true;
+    initChatBot();
+  }
 });
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeModal();
-});
-</script>
-  <!-- ===== Chatbot Styles ===== -->
-<style>
-  .vim-chat-widget {
-    position: fixed; bottom: 20px; left: 20px; z-index: 9998;
-    font-family: 'Vazirmatn', system-ui, sans-serif;
-  }
-  .vim-chat-btn {
-    width: 60px; height: 60px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
-    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 20px rgba(10,22,40,0.25); transition: transform 0.3s ease;
-  }
-  .vim-chat-btn:hover { transform: scale(1.08); }
-  .vim-chat-btn svg { width: 28px; height: 28px; fill: var(--navy-950); }
-  
-  .vim-chat-box {
-    position: absolute; bottom: 75px; left: 0; width: 340px; height: 440px;
-    background: var(--white); border-radius: 18px; border: 1px solid var(--slate-200);
-    box-shadow: 0 12px 40px rgba(10,22,40,0.2); display: flex; flex-direction: column;
-    overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(15px);
-    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  }
-  .vim-chat-box.active { opacity: 1; visibility: visible; transform: translateY(0); }
-  
-  .vim-chat-header {
-    background: var(--navy-950); color: var(--white); padding: 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .vim-chat-title { font-size: 0.9rem; font-weight: 700; color: var(--gold-400); }
-  .vim-chat-close { background: none; border: none; color: var(--slate-400); font-size: 1.1rem; cursor: pointer; }
-  
-  .vim-chat-messages {
-    flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;
-    background: var(--slate-50);
-  }
-  .vim-msg { max-width: 80%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.82rem; line-height: 1.5; }
-  .vim-msg.bot { background: var(--white); color: var(--navy-950); border: 1px solid var(--slate-200); align-self: flex-start; }
-  .vim-msg.user { background: var(--navy-800); color: var(--white); align-self: flex-end; }
-  
-  .vim-chat-input-area {
-    padding: 0.75rem; background: var(--white); border-top: 1px solid var(--slate-200);
-    display: flex; gap: 0.5rem;
-  }
-  .vim-chat-input {
-    flex: 1; padding: 0.6rem 0.9rem; border: 1px solid var(--slate-200); border-radius: 10px;
-    font-family: inherit; font-size: 0.82rem; outline: none;
-  }
-  .vim-chat-input:focus { border-color: var(--gold-400); }
-  .vim-chat-send {
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); border: none;
-    padding: 0 1rem; border-radius: 10px; font-family: inherit; font-weight: 700; font-size: 0.8rem;
-    color: var(--navy-950); cursor: pointer;
-  }
-</style>
+chatClose.addEventListener('click', () => chatBox.classList.remove('active'));
 
-<!-- ===== Chatbot Styles ===== -->
-<style>
-  .vim-chat-widget {
-    position: fixed; bottom: 20px; left: 20px; z-index: 9998;
-    font-family: 'Vazirmatn', system-ui, sans-serif;
+function appendMessage(text, sender, isHtml = false) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'vim-msg ' + sender;
+  if (isHtml) {
+    msgDiv.innerHTML = text;
+  } else {
+    msgDiv.textContent = text;
   }
-  .vim-chat-btn {
-    width: 60px; height: 60px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500));
-    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 20px rgba(10,22,40,0.25); transition: transform 0.3s ease;
-  }
-  .vim-chat-btn:hover { transform: scale(1.08); }
-  .vim-chat-btn svg { width: 28px; height: 28px; fill: var(--navy-950); }
-  
-  .vim-chat-box {
-    position: absolute; bottom: 75px; left: 0; width: 340px; height: 460px;
-    background: var(--white); border-radius: 18px; border: 1px solid var(--slate-200);
-    box-shadow: 0 12px 40px rgba(10,22,40,0.2); display: flex; flex-direction: column;
-    overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(15px);
-    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-  }
-  .vim-chat-box.active { opacity: 1; visibility: visible; transform: translateY(0); }
-  
-  .vim-chat-header {
-    background: var(--navy-950); color: var(--white); padding: 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .vim-chat-title { font-size: 0.9rem; font-weight: 700; color: var(--gold-400); }
-  .vim-chat-close { background: none; border: none; color: var(--slate-400); font-size: 1.1rem; cursor: pointer; }
-  
-  .vim-chat-messages {
-    flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;
-    background: var(--slate-50);
-  }
-  .vim-msg { max-width: 85%; padding: 0.65rem 0.9rem; border-radius: 12px; font-size: 0.82rem; line-height: 1.6; }
-  .vim-msg.bot { background: var(--white); color: var(--navy-950); border: 1px solid var(--slate-200); align-self: flex-start; }
-  .vim-msg.user { background: var(--navy-800); color: var(--white); align-self: flex-end; }
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
-  /* Style for clickable questions prompt */
-  .vim-question-chips {
-    display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.5rem;
-  }
-  .vim-chip {
-    background: rgba(226,181,103,0.15); border: 1px solid var(--gold-400); color: var(--navy-950);
-    padding: 0.45rem 0.75rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600;
-    cursor: pointer; text-align: right; transition: all 0.2s ease;
-  }
-  .vim-chip:hover { background: var(--gold-400); color: var(--navy-950); }
+async function initChatBot() {
+  const welcomeText = `با سلام و احترام؛<br><br>` +
+                      `تیم پشتیبانی مؤسسه مهاجرتی VIM به صورت تمام‌وقت آماده خدمت‌رسانی به شما مراجعین محترم می‌باشد.<br><br>` +
+                      `لطفاً جهت دریافت اطلاعات پیرامون ویزای بشردوستانه، صرفاً نام کشور مورد نظر خود (به عنوان مثال: آلمان) را در بخش چت یادداشت فرمایید. سیستم هوشمند این مؤسسه، راهنمایی‌ها و اطلاعات لازم را جهت مطالعه و آگاهی شما ارسال خواهد کرد.<br><br>` +
+                      `خاطرنشان می‌سازد؛ در صورتی که سیستم هوشمند قادر به پاسخگویی به پرسش شما نباشد، می‌توانید درخواست خود را از طریق شماره واتساپ با ما در میان بگذارید.`;
   
-  .vim-chat-input-area {
-    padding: 0.75rem; background: var(--white); border-top: 1px solid var(--slate-200);
-    display: flex; gap: 0.5rem;
-  }
-  .vim-chat-input {
-    flex: 1; padding: 0.6rem 0.9rem; border: 1px solid var(--slate-200); border-radius: 10px;
-    font-family: inherit; font-size: 0.82rem; outline: none;
-  }
-  .vim-chat-input:focus { border-color: var(--gold-400); }
-  .vim-chat-send {
-    background: linear-gradient(135deg, var(--gold-400), var(--gold-500)); border: none;
-    padding: 0 1rem; border-radius: 10px; font-family: inherit; font-weight: 700; font-size: 0.8rem;
-    color: var(--navy-950); cursor: pointer;
-  }
+  appendMessage(welcomeText, "bot", true);
 
-  /* Mobile Responsive adjustments */
-  @media (max-width: 480px) {
-    .vim-chat-box {
-      width: calc(100vw - 30px); height: 420px; bottom: 70px; left: 15px; right: 15px;
+  try {
+    const response = await fetch(SCRIPT_URL + "?action=get_questions");
+    const data = await response.json();
+    if (data.questions && data.questions.length > 0) {
+      showAllQuestions(data.questions);
     }
+  } catch (e) {
+    console.error("خطا در دریافت سوالات از شیت");
   }
-</style>
+}
 
-<!-- ===== Chatbot HTML Structure ===== -->
-<div class="vim-chat-widget">
-  <div class="vim-chat-box" id="vimChatBox">
-    <div class="vim-chat-header">
-      <span class="vim-chat-title">پشتیبان آنلاین VIM</span>
-      <button class="vim-chat-close" id="vimChatClose">✕</button>
-    </div>
-    <div class="vim-chat-messages" id="vimChatMessages"></div>
-    <div class="vim-chat-input-area">
-      <input type="text" class="vim-chat-input" id="vimChatInput" placeholder="نام کشور یا سوال خود را بنویسید..." />
-      <button class="vim-chat-send" id="vimChatSend">ارسال</button>
-    </div>
-  </div>
-  <button class="vim-chat-btn" id="vimChatBtn" aria-label="چت با پشتیبان">
-    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-  </button>
-</div>
-
-<!-- ===== Chatbot Script ===== -->
-<script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwvbJJX-QBuazetbrHOuTMWMyE2DaWUJrv8P7Wk7MPPKEApzRt4v-Ilfl21dSCggKeT/exec"; // لینک وب اپلیکیشن گوگل اسکریپت را اینجا جایگزین کنید
-
-  const chatBox = document.getElementById('vimChatBox');
-  const chatBtn = document.getElementById('vimChatBtn');
-  const chatClose = document.getElementById('vimChatClose');
-  const chatMessages = document.getElementById('vimChatMessages');
-  const chatInput = document.getElementById('vimChatInput');
-  const chatSend = document.getElementById('vimChatSend');
-
-  let allQuestions = [];
-  let currentQuestionIndex = 0;
-  let rotationInterval = null;
-
-  // باز کردن و بستن پنجره چت (در حالت عادی کاملاً بسته است)
-  chatBtn.addEventListener('click', () => {
-    chatBox.classList.toggle('active');
-    if (chatBox.classList.contains('active') && chatMessages.children.length === 0) {
-      initChatBot();
-    }
+function showAllQuestions(questions) {
+  let htmlContent = "لیست پرسش‌های موجود (برای مشاهده پاسخ روی سوال مورد نظر کلیک کنید):<div class=\"vim-question-chips\">";
+  questions.forEach(q => {
+    htmlContent += `<div class="vim-chip" onclick="selectQuestion('${q.replace(/'/g, "\\'")}')">${q}</div>`;
   });
-  chatClose.addEventListener('click', () => chatBox.classList.remove('active'));
+  htmlContent += "</div>";
 
-  function appendMessage(text, sender, isHtml = false) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'vim-msg ' + sender;
-    if (isHtml) {
-      msgDiv.innerHTML = text;
-    } else {
-      msgDiv.textContent = text;
-    }
-    chatMessages.appendChild(msgDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
+  appendMessage(htmlContent, "bot", true);
+}
 
-  async function initChatBot() {
-    // پیام خوش‌آمدگویی رسمی جدید
-    const welcomeText = `با سلام و احترام؛<br><br>` +
-                        `تیم پشتیبانی مؤسسه مهاجرتی VIM به صورت تمام‌وقت آماده خدمت‌رسانی به شما مراجعین محترم می‌باشد.<br><br>` +
-                        `لطفاً جهت دریافت اطلاعات پیرامون ویزای بشردوستانه، صرفاً نام کشور مورد نظر خود (به عنوان مثال: آلمان) را در بخش چت یادداشت فرمایید. سیستم هوشمند این مؤسسه، راهنمایی‌ها و اطلاعات لازم را جهت مطالعه و آگاهی شما ارسال خواهد کرد.<br><br>` +
-                        `خاطرنشان می‌سازد؛ در صورتی که سیستم هوشمند قادر به پاسخگویی به پرسش شما نباشد، می‌توانید درخواست خود را از طریق شماره واتساپ با ما در میان بگذارید.`;
+window.selectQuestion = function(questionText) {
+  chatInput.value = questionText;
+  handleUserMessage();
+};
+
+async function handleUserMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  appendMessage(text, "user");
+  chatInput.value = "";
+
+  const loadingId = "loading_" + Date.now();
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'vim-msg bot';
+  loadingDiv.id = loadingId;
+  loadingDiv.textContent = "در حال پردازش و استعلام از سیستم...";
+  chatMessages.appendChild(loadingDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  try {
+    const response = await fetch(SCRIPT_URL + "?q=" + encodeURIComponent(text));
+    const data = await response.json();
     
-    appendMessage(welcomeText, "bot", true);
-
-    // دریافت سوالات از گوگل‌شیت
-    try {
-      const response = await fetch(SCRIPT_URL + "?action=get_questions");
-      const data = await response.json();
-      if (data.questions && data.questions.length > 0) {
-        allQuestions = data.questions;
-        startQuestionRotation();
-      }
-    } catch (e) {
-      console.error("خطا در دریافت سوالات از شیت");
-    }
+    document.getElementById(loadingId).remove();
+    appendMessage(data.answer, "bot");
+  } catch (error) {
+    document.getElementById(loadingId).remove();
+    appendMessage("خطایی در ارتباط با سرور رخ داد. لطفاً دوباره تلاش کنید.", "bot");
   }
+}
 
-  // نمایش چرخشی ۵ سوال هر ۳۰ ثانیه
-  function startQuestionRotation() {
-    showBatchQuestions();
-    rotationInterval = setInterval(() => {
-      showBatchQuestions();
-    }, 30000);
-  }
-
-  function showBatchQuestions() {
-    if (allQuestions.length === 0) return;
-
-    let batch = [];
-    for (let i = 0; i < 5; i++) {
-      if (currentQuestionIndex >= allQuestions.length) {
-        currentQuestionIndex = 0; // تکرار دوباره روند از ابتدا پس از اتمام سوالات
-      }
-      batch.push(allQuestions[currentQuestionIndex]);
-      currentQuestionIndex++;
-    }
-
-    let htmlContent = "پرسش‌های پیشنهادی (برای مشاهده پاسخ روی هر کدام کلیک کنید):<div class=\"vim-question-chips\">";
-    batch.forEach(q => {
-      htmlContent += `<div class="vim-chip" onclick="selectQuestion('${q.replace(/'/g, "\\'")}')">${q}</div>`;
-    });
-    htmlContent += "</div>";
-
-    appendMessage(htmlContent, "bot", true);
-  }
-
-  // هنگامی که کاربر روی یکی از سوالات پیشنهادی کلیک می‌کند
-  window.selectQuestion = function(questionText) {
-    chatInput.value = questionText;
-    handleUserMessage();
-  };
-
-  async function handleUserMessage() {
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    appendMessage(text, "user");
-    chatInput.value = "";
-
-    const loadingId = "loading_" + Date.now();
-    const loadingDiv = document.createElement('div');
-    loadingDiv.className = 'vim-msg bot';
-    loadingDiv.id = loadingId;
-    loadingDiv.textContent = "در حال پردازش و استعلام از سیستم...";
-    chatMessages.appendChild(loadingDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    try {
-      const response = await fetch(SCRIPT_URL + "?q=" + encodeURIComponent(text));
-      const data = await response.json();
-      
-      document.getElementById(loadingId).remove();
-      appendMessage(data.answer, "bot");
-    } catch (error) {
-      document.getElementById(loadingId).remove();
-      appendMessage("خطایی در ارتباط با سرور رخ داد. لطفاً دوباره تلاش کنید.", "bot");
-    }
-  }
-
-  chatSend.addEventListener('click', handleUserMessage);
-  chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') handleUserMessage();
-  });
+chatSend.addEventListener('click', handleUserMessage);
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') handleUserMessage();
+});
 </script>
 </body>
 </html>
